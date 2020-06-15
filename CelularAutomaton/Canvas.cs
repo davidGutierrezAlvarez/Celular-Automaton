@@ -52,7 +52,11 @@ namespace CelularAutomaton {
 		public int Column	{ get { return column; } set { column = value; height = heightCanvas/column;  }}
 		
 		
-		public void drawCells() {
+		public void resetMatriz() {
+			matriz = new int[column, row];
+		}
+		
+		public void drawMatriz() {
 			Graphics g = Graphics.FromImage(bmpBackGroundVisible);
 			int x = widthCanvas/row;
 			int y = heightCanvas/column;
@@ -63,10 +67,24 @@ namespace CelularAutomaton {
 				}
 			}
 			g.Dispose();
-			matriz = new int[column, row];
 		}
 		
-		public void drawSquare(MouseEventArgs e) {
+		public void fillCells() {
+			//rellenar las celdas con cada celula
+			Graphics g = Graphics.FromImage(bmpBackGroundVisible);
+			
+			for(int y = 0; y < column; y++) {
+				for(int x = 0; x < row; x++) {
+					//dibujar matriz
+					if(matriz[y,x] == 1) {
+						g.FillRectangle(b3, x*width+1, y*height+1, width-1, height-1);
+					}
+				}
+			}
+			g.Dispose();
+		}
+		
+		public void drawCell(MouseEventArgs e) {
 			Graphics g = Graphics.FromImage(bmpBackGroundVisible);
 			if(e.X/width < row && e.Y/height < column) {
 				if(e.Button == MouseButtons.Left) {
@@ -81,7 +99,7 @@ namespace CelularAutomaton {
 			g.Dispose();
 		}
 		
-		public void hoverSquare(MouseEventArgs e) {
+		public void hoverCell(MouseEventArgs e) {
 			Graphics g = Graphics.FromImage(bmpForeGround);
 			g.Clear(Color.Transparent);
 			if(bmpBackGroundVisible.GetPixel(e.X, e.Y).ToArgb().Equals(Color.FromArgb(243, 69, 69).ToArgb())) {
@@ -92,22 +110,66 @@ namespace CelularAutomaton {
 			g.Dispose();
 		}
 		
-		public String save() {
-			String str = "";
+		public String save(String description) {
+			int rowsText = 1;
+			foreach(char c in description) {
+				if(c == '\n') { rowsText++; }
+			}
+			String str = row.ToString() + "," + column.ToString() + "," + rowsText +"\n";
+			str +=  description + "\n";
 			for(int y = 0; y < column; y++) {
 				for(int x = 0; x < row; x++) {
-					if(matriz[y,x] == 1) {
-						str += "1";
-					} else {
-						str += "0";
-					}
-					if(x != row-1) {
-						str += ",";
-					}
+					str += matriz[y,x];
+					
+					if(x != row-1) { str += ","; }
 				}
-				str += "\n";
+				if(y != column-1) { str += "\n"; }
 			}
 			return str;
+		}
+		
+		public String setDescripcion(String file) {
+			//prima fila contiene (ancho, alto, cantidad de columnas de texto)
+			//columnas con texto
+			//matriz conformada por (ancho y alto)
+			//regresar texto
+			int rowActual = 0;
+			String descripcion = "";
+			String[] rowsFile = file.Split('\n');
+			int columnsDescripcion = 0;
+			
+			foreach(String r in rowsFile) {
+				if(rowActual == 0) {
+					//obtengo primera fila
+					String[] values = r.Split(',');
+					Row = Int32.Parse(values[0]);
+					Column = Int32.Parse(values[1]);
+					columnsDescripcion = Int32.Parse(values[2]);
+					//inicializar matriz
+					matriz = new int[column, row];
+				} else if(rowActual <= columnsDescripcion) {
+					//obtengo la descripcion
+					descripcion += r;
+					if(rowActual < columnsDescripcion) {
+						//evita generar un salto al final del documento
+						descripcion += "\n";
+					}
+				}else {
+					//obtengo la matriz
+					//formato de entrada...
+					//0,1,0,1,0,1,0,0,1,0
+					int x = 0;
+					int y = rowActual - (columnsDescripcion+1);
+					String[] data = r.Split(',');
+					foreach(String col in data) {
+						matriz[y,x] = Int32.Parse(col);
+						x++;
+					}
+				}
+				
+				rowActual++;
+			}
+			return descripcion;
 		}
 		
 		public void clean() {

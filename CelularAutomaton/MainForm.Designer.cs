@@ -35,7 +35,7 @@ namespace CelularAutomaton {
 			this.components = new System.ComponentModel.Container();
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
 			this.saveFile = new System.Windows.Forms.SaveFileDialog();
-			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+			this.openFile = new System.Windows.Forms.OpenFileDialog();
 			this.panelSize = new System.Windows.Forms.Panel();
 			this.lblMinimized = new System.Windows.Forms.Label();
 			this.lblClosed = new System.Windows.Forms.Label();
@@ -49,31 +49,30 @@ namespace CelularAutomaton {
 			this.salirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.ayudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.opcionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
 			this.panel = new System.Windows.Forms.Panel();
+			this.label3 = new System.Windows.Forms.Label();
+			this.label1 = new System.Windows.Forms.Label();
+			this.textBox = new System.Windows.Forms.RichTextBox();
 			this.btnColorBlack = new System.Windows.Forms.Label();
 			this.btnColorWhite = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.btnGenerate = new System.Windows.Forms.Label();
-			this.height = new System.Windows.Forms.TextBox();
-			this.width = new System.Windows.Forms.TextBox();
+			this.textBoxColumn = new System.Windows.Forms.TextBox();
+			this.textBoxRow = new System.Windows.Forms.TextBox();
+			this.saveAsFile = new System.Windows.Forms.SaveFileDialog();
 			this.panelSize.SuspendLayout();
 			this.menu.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.panel.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// openFileDialog1
-			// 
-			this.openFileDialog1.FileName = "openFileDialog1";
-			// 
 			// panelSize
 			// 
 			this.panelSize.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
 			this.panelSize.Controls.Add(this.lblMinimized);
 			this.panelSize.Controls.Add(this.lblClosed);
-			this.panelSize.Location = new System.Drawing.Point(742, 4);
+			this.panelSize.Location = new System.Drawing.Point(781, 2);
 			this.panelSize.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.panelSize.Name = "panelSize";
 			this.panelSize.Size = new System.Drawing.Size(71, 34);
@@ -83,11 +82,11 @@ namespace CelularAutomaton {
 			// 
 			this.lblMinimized.BackColor = System.Drawing.Color.Transparent;
 			this.lblMinimized.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.lblMinimized.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblMinimized.Font = new System.Drawing.Font("Microsoft Sans Serif", 19F, System.Drawing.FontStyle.Bold);
 			this.lblMinimized.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-			this.lblMinimized.Location = new System.Drawing.Point(0, -4);
+			this.lblMinimized.Location = new System.Drawing.Point(0, -5);
 			this.lblMinimized.Name = "lblMinimized";
-			this.lblMinimized.Size = new System.Drawing.Size(29, 34);
+			this.lblMinimized.Size = new System.Drawing.Size(29, 46);
 			this.lblMinimized.TabIndex = 1;
 			this.lblMinimized.Text = "__";
 			this.lblMinimized.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -97,7 +96,7 @@ namespace CelularAutomaton {
 			// 
 			this.lblClosed.BackColor = System.Drawing.Color.Transparent;
 			this.lblClosed.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.lblClosed.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblClosed.Font = new System.Drawing.Font("Microsoft Sans Serif", 19F, System.Drawing.FontStyle.Bold);
 			this.lblClosed.ForeColor = System.Drawing.Color.Red;
 			this.lblClosed.Location = new System.Drawing.Point(34, 0);
 			this.lblClosed.Name = "lblClosed";
@@ -113,12 +112,11 @@ namespace CelularAutomaton {
 			this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 									this.MenuFile,
 									this.ayudaToolStripMenuItem,
-									this.opcionesToolStripMenuItem,
-									this.resetToolStripMenuItem});
+									this.opcionesToolStripMenuItem});
 			this.menu.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
 			this.menu.Location = new System.Drawing.Point(0, 0);
 			this.menu.Name = "menu";
-			this.menu.Size = new System.Drawing.Size(810, 45);
+			this.menu.Size = new System.Drawing.Size(852, 45);
 			this.menu.TabIndex = 1;
 			this.menu.Text = "menu";
 			this.menu.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MenuMouseDown);
@@ -148,7 +146,7 @@ namespace CelularAutomaton {
 			this.abrirToolStripMenuItem.Name = "abrirToolStripMenuItem";
 			this.abrirToolStripMenuItem.Size = new System.Drawing.Size(198, 28);
 			this.abrirToolStripMenuItem.Text = "Abrir...";
-			this.abrirToolStripMenuItem.Click += new System.EventHandler(this.AbrirToolStripMenuItemClick);
+			this.abrirToolStripMenuItem.Click += new System.EventHandler(this.MenuItemOpen);
 			// 
 			// nuevoToolStripMenuItem
 			// 
@@ -157,6 +155,7 @@ namespace CelularAutomaton {
 			this.nuevoToolStripMenuItem.Name = "nuevoToolStripMenuItem";
 			this.nuevoToolStripMenuItem.Size = new System.Drawing.Size(198, 28);
 			this.nuevoToolStripMenuItem.Text = "Nuevo";
+			this.nuevoToolStripMenuItem.Click += new System.EventHandler(this.MenuItemNew);
 			// 
 			// guardarToolStripMenuItem
 			// 
@@ -165,7 +164,7 @@ namespace CelularAutomaton {
 			this.guardarToolStripMenuItem.Name = "guardarToolStripMenuItem";
 			this.guardarToolStripMenuItem.Size = new System.Drawing.Size(198, 28);
 			this.guardarToolStripMenuItem.Text = "Guardar";
-			this.guardarToolStripMenuItem.Click += new System.EventHandler(this.GuardarToolStripMenuItemClick);
+			this.guardarToolStripMenuItem.Click += new System.EventHandler(this.MenuItemSave);
 			// 
 			// guardarComoToolStripMenuItem
 			// 
@@ -174,6 +173,7 @@ namespace CelularAutomaton {
 			this.guardarComoToolStripMenuItem.Name = "guardarComoToolStripMenuItem";
 			this.guardarComoToolStripMenuItem.Size = new System.Drawing.Size(198, 28);
 			this.guardarComoToolStripMenuItem.Text = "Guardar Como...";
+			this.guardarComoToolStripMenuItem.Click += new System.EventHandler(this.MenuItemSaveAs);
 			// 
 			// toolStripSeparator1
 			// 
@@ -208,13 +208,6 @@ namespace CelularAutomaton {
 			this.opcionesToolStripMenuItem.Text = "Opciones";
 			this.opcionesToolStripMenuItem.Click += new System.EventHandler(this.OpcionesToolStripMenuItemClick);
 			// 
-			// resetToolStripMenuItem
-			// 
-			this.resetToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-			this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
-			this.resetToolStripMenuItem.Size = new System.Drawing.Size(57, 41);
-			this.resetToolStripMenuItem.Text = "Reset";
-			// 
 			// pictureBox
 			// 
 			this.pictureBox.BackColor = System.Drawing.Color.White;
@@ -229,22 +222,58 @@ namespace CelularAutomaton {
 			// panel
 			// 
 			this.panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+			this.panel.Controls.Add(this.label3);
+			this.panel.Controls.Add(this.label1);
+			this.panel.Controls.Add(this.textBox);
 			this.panel.Controls.Add(this.btnColorBlack);
 			this.panel.Controls.Add(this.btnColorWhite);
 			this.panel.Controls.Add(this.label2);
 			this.panel.Controls.Add(this.btnGenerate);
-			this.panel.Controls.Add(this.height);
-			this.panel.Controls.Add(this.width);
+			this.panel.Controls.Add(this.textBoxColumn);
+			this.panel.Controls.Add(this.textBoxRow);
 			this.panel.Location = new System.Drawing.Point(407, 46);
 			this.panel.Name = "panel";
-			this.panel.Size = new System.Drawing.Size(277, 400);
+			this.panel.Size = new System.Drawing.Size(315, 400);
 			this.panel.TabIndex = 10;
+			// 
+			// label3
+			// 
+			this.label3.Cursor = System.Windows.Forms.Cursors.Arrow;
+			this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+			this.label3.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+			this.label3.Location = new System.Drawing.Point(0, 156);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(312, 23);
+			this.label3.TabIndex = 17;
+			this.label3.Text = "TAMAÑO DE LA MATRIZ";
+			this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// label1
+			// 
+			this.label1.Cursor = System.Windows.Forms.Cursors.Arrow;
+			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+			this.label1.Location = new System.Drawing.Point(0, 13);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(312, 23);
+			this.label1.TabIndex = 16;
+			this.label1.Text = "DESCRIPCION";
+			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// textBox
+			// 
+			this.textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.textBox.Location = new System.Drawing.Point(10, 43);
+			this.textBox.Name = "textBox";
+			this.textBox.Size = new System.Drawing.Size(290, 96);
+			this.textBox.TabIndex = 15;
+			this.textBox.Text = "";
 			// 
 			// btnColorBlack
 			// 
 			this.btnColorBlack.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(211)))), ((int)(((byte)(242)))));
 			this.btnColorBlack.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.btnColorBlack.Location = new System.Drawing.Point(29, 132);
+			this.btnColorBlack.Location = new System.Drawing.Point(29, 266);
 			this.btnColorBlack.Name = "btnColorBlack";
 			this.btnColorBlack.Size = new System.Drawing.Size(30, 30);
 			this.btnColorBlack.TabIndex = 14;
@@ -253,7 +282,7 @@ namespace CelularAutomaton {
 			// 
 			this.btnColorWhite.BackColor = System.Drawing.Color.White;
 			this.btnColorWhite.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.btnColorWhite.Location = new System.Drawing.Point(29, 102);
+			this.btnColorWhite.Location = new System.Drawing.Point(29, 236);
 			this.btnColorWhite.Name = "btnColorWhite";
 			this.btnColorWhite.Size = new System.Drawing.Size(30, 30);
 			this.btnColorWhite.TabIndex = 14;
@@ -262,7 +291,7 @@ namespace CelularAutomaton {
 			// 
 			this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-			this.label2.Location = new System.Drawing.Point(63, 42);
+			this.label2.Location = new System.Drawing.Point(83, 194);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(27, 23);
 			this.label2.TabIndex = 13;
@@ -271,39 +300,39 @@ namespace CelularAutomaton {
 			// btnGenerate
 			// 
 			this.btnGenerate.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.btnGenerate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnGenerate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
 			this.btnGenerate.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-			this.btnGenerate.Location = new System.Drawing.Point(145, 40);
+			this.btnGenerate.Location = new System.Drawing.Point(171, 195);
 			this.btnGenerate.Name = "btnGenerate";
-			this.btnGenerate.Size = new System.Drawing.Size(100, 23);
+			this.btnGenerate.Size = new System.Drawing.Size(123, 23);
 			this.btnGenerate.TabIndex = 12;
 			this.btnGenerate.Text = "GENERAR";
 			this.btnGenerate.Click += new System.EventHandler(this.ClickGenerate);
 			// 
 			// height
 			// 
-			this.height.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.height.Location = new System.Drawing.Point(96, 37);
-			this.height.Name = "height";
-			this.height.Size = new System.Drawing.Size(40, 28);
-			this.height.TabIndex = 11;
-			this.height.TextChanged += new System.EventHandler(this.HeightTextChanged);
+			this.textBoxColumn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBoxColumn.Location = new System.Drawing.Point(119, 192);
+			this.textBoxColumn.Name = "height";
+			this.textBoxColumn.Size = new System.Drawing.Size(40, 28);
+			this.textBoxColumn.TabIndex = 11;
+			this.textBoxColumn.TextChanged += new System.EventHandler(this.HeightTextChanged);
 			// 
 			// width
 			// 
-			this.width.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-			this.width.Location = new System.Drawing.Point(17, 37);
-			this.width.Name = "width";
-			this.width.Size = new System.Drawing.Size(40, 28);
-			this.width.TabIndex = 10;
-			this.width.TextChanged += new System.EventHandler(this.WidthTextChanged);
+			this.textBoxRow.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+			this.textBoxRow.Location = new System.Drawing.Point(34, 192);
+			this.textBoxRow.Name = "width";
+			this.textBoxRow.Size = new System.Drawing.Size(40, 28);
+			this.textBoxRow.TabIndex = 10;
+			this.textBoxRow.TextChanged += new System.EventHandler(this.WidthTextChanged);
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-			this.ClientSize = new System.Drawing.Size(810, 539);
+			this.ClientSize = new System.Drawing.Size(852, 539);
 			this.Controls.Add(this.panel);
 			this.Controls.Add(this.pictureBox);
 			this.Controls.Add(this.panelSize);
@@ -320,14 +349,17 @@ namespace CelularAutomaton {
 			this.panel.PerformLayout();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.RichTextBox textBox;
+		private System.Windows.Forms.SaveFileDialog saveAsFile;
 		private System.Windows.Forms.Label btnColorBlack;
 		private System.Windows.Forms.Label btnColorWhite;
 		private System.Windows.Forms.Label btnGenerate;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.TextBox width;
-		private System.Windows.Forms.TextBox height;
+		private System.Windows.Forms.TextBox textBoxRow;
+		private System.Windows.Forms.TextBox textBoxColumn;
 		private System.Windows.Forms.Panel panel;
-		private System.Windows.Forms.ToolStripMenuItem resetToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem opcionesToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem ayudaToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem salirToolStripMenuItem;
@@ -342,7 +374,7 @@ namespace CelularAutomaton {
 		private System.Windows.Forms.ToolStripMenuItem MenuFile;
 		private System.Windows.Forms.MenuStrip menu;
 		private System.Windows.Forms.PictureBox pictureBox;
-		private System.Windows.Forms.OpenFileDialog openFileDialog1;
+		private System.Windows.Forms.OpenFileDialog openFile;
 		private System.Windows.Forms.SaveFileDialog saveFile;
 		private System.Windows.Forms.Timer timer1;
 		////////////////////////////////////////////////////////////
@@ -433,6 +465,7 @@ namespace CelularAutomaton {
 	            textBox.SelectionLength = 0;
 			}
 		}
+		
 				
 		void resize() {
 			pictureBox.Height = 400;

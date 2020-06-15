@@ -5,3 +5,10 @@ C:\Users\David Gutierrez\Documents\SharpDevelop Projects\CelularAutomaton\Celula
 C:\Users\David Gutierrez\Documents\SharpDevelop Projects\CelularAutomaton\CelularAutomaton\obj\Debug\CelularAutomaton.csproj.GenerateResource.Cache
 C:\Users\David Gutierrez\Documents\SharpDevelop Projects\CelularAutomaton\CelularAutomaton\obj\Debug\CelularAutomaton.exe
 C:\Users\David Gutierrez\Documents\SharpDevelop Projects\CelularAutomaton\CelularAutomaton\obj\Debug\CelularAutomaton.pdb
+C:\Users\David Gutierrez\Documents\Proyectos\CelularAutomaton\CelularAutomaton\bin\Debug\CelularAutomaton.exe
+C:\Users\David Gutierrez\Documents\Proyectos\CelularAutomaton\CelularAutomaton\bin\Debug\CelularAutomaton.pdb
+C:\Users\David Gutierrez\Documents\Proyectos\CelularAutomaton\CelularAutomaton\obj\Debug\CelularAutomaton.csprojResolveAssemblyReference.cache
+C:\Users\David Gutierrez\Documents\Proyectos\CelularAutomaton\CelularAutomaton\obj\Debug\CelularAutomaton.MainForm.resources
+C:\Users\David Gutierrez\Documents\Proyectos\CelularAutomaton\CelularAutomaton\obj\Debug\CelularAutomaton.csproj.GenerateResource.Cache
+C:\Users\David Gutierrez\Documents\Proyectos\CelularAutomaton\CelularAutomaton\obj\Debug\CelularAutomaton.exe
+C:\Users\David Gutierrez\Documents\Proyectos\CelularAutomaton\CelularAutomaton\obj\Debug\CelularAutomaton.pdb
