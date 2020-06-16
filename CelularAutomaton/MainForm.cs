@@ -15,6 +15,8 @@ namespace CelularAutomaton {
 	public partial class MainForm : Form {
 		//validar numero entr 1 y 99 con regex
 		String number = @"[0-9]{0,2}$";
+		Pen penBlack = new Pen(Color.Black);//lapiz negro
+		Pen penWhite = new Pen(Color.White);//lapiz negro
 		
 		public MainForm() {
 			InitializeComponent();
@@ -30,20 +32,21 @@ namespace CelularAutomaton {
 		void init() {
 			saveFile.Title =	"Guardar Mapa Celular";
 			saveFile.Filter=	"Mapa Celular (*.ca)|*.ca" + "|"+
-								"Archivo de texto (*.txt)|*.txt" + "|" +
 								"Todos los archivos (*.*)|*.*";
 			
 			saveAsFile.Title =	"Guardar Mapa Celular";
 			saveAsFile.Filter=	"Mapa Celular (*.ca)|*.ca" + "|"+
-								"Archivo de texto (*.txt)|*.txt" + "|" +
 								"Todos los archivos (*.*)|*.*";
+			
+			openFile.Title	= "Cargar Mapa Celular";
+			openFile.Filter	= "Mapa Celular (*.ca)|*.ca";
 			resize();
 			textBoxRow.Text = "15";
 			textBoxColumn.Text= "15";
 			canvas = new Canvas(pictureBox.Width, pictureBox.Height, 15, 15);
 			pictureBox.BackgroundImage = canvas.BackGroundVisible;
 			pictureBox.Image = canvas.ForeGround;
-			canvas.drawMatriz();
+			canvas.drawMatriz(MenuItemRendija.Checked ? penBlack : penWhite);
 		}
 		
 		void ClickGenerate(object sender, EventArgs e) {
@@ -56,7 +59,7 @@ namespace CelularAutomaton {
 			//aqui recoge el alto
 			canvas.Column = Int32.Parse(textBoxColumn.Text);
 			canvas.resetMatriz();
-			canvas.drawMatriz();
+			canvas.drawMatriz(MenuItemRendija.Checked ? penBlack : penWhite);
 			pictureBox.Refresh();
 		}
 		
@@ -70,7 +73,14 @@ namespace CelularAutomaton {
 		
 		
 		void PictureBoxMouseMove(object sender, MouseEventArgs e) {
-			canvas.hoverCell(e);
+			canvas.cleanHover();
+			if(MenuItemHover.Checked) {
+				canvas.hoverCell(e);
+			}
+			
+			if(e.Button == MouseButtons.Left) {
+				canvas.drawCell(e);
+			}
 			pictureBox.Refresh();
 		}
 		
@@ -79,32 +89,21 @@ namespace CelularAutomaton {
 			pictureBox.Refresh();
 		}
 		
-		bool strVoid(String str) {
-			if(str == "" || str == "0" || str == "00") {
-				return true;
-			}
-			
-			return false;
-		}
-		
-		
-	
-		
-		void OpcionesToolStripMenuItemClick(object sender, EventArgs e) {
-			MessageBox.Show(canvas.save(textBox.Text));
-		}
+
 		
 		void MenuItemSave(object sender, EventArgs e) {
+			String save = save64(canvas.save(textBox.Text));
+			
 			if(openFile.FileName != "") {
-				System.IO.File.WriteAllText(@openFile.FileName, canvas.save(textBox.Text));
+				System.IO.File.WriteAllText(@openFile.FileName, save);
 				return;
 			}
 			if(saveFile.FileName != "") {
-				System.IO.File.WriteAllText(@saveFile.FileName, canvas.save(textBox.Text));
+				System.IO.File.WriteAllText(@saveFile.FileName, save);
 				return;
 			}
 			if(saveFile.ShowDialog() == DialogResult.OK) {
-				System.IO.File.WriteAllText(@saveFile.FileName, canvas.save(textBox.Text));
+				System.IO.File.WriteAllText(@saveFile.FileName, save);
 			}
 			
 		}
@@ -112,20 +111,25 @@ namespace CelularAutomaton {
 		void MenuItemSaveAs(object sender, EventArgs e) {
 			saveAsFile.FileName = "";
 			if(saveAsFile.ShowDialog() == DialogResult.OK) {
-				System.IO.File.WriteAllText(@saveAsFile.FileName, canvas.save(textBox.Text));
+				String save = save64(canvas.save(textBox.Text));
+				
+				System.IO.File.WriteAllText(@saveAsFile.FileName, save);
 				saveFile.FileName = saveAsFile.FileName;
 			}
 		}
 		
 		void MenuItemOpen(object sender, EventArgs e) {
 			//cargar archivo, y dibujar celdas respectivas
+			openFile.FileName = "";
 			if(openFile.ShowDialog() == DialogResult.OK) {
+				String fileText = open64(File.ReadAllText(openFile.FileName));
+				if(fileText == "Error") { return; }
+				
 				saveFile.FileName = openFile.FileName;
 				canvas.clean();
 				//cargar y generar matriz
-				textBox.Text = canvas.setDescripcion(File.ReadAllText(openFile.FileName));
-				
-				canvas.drawMatriz();
+				textBox.Text = canvas.setDescripcion(fileText);
+				canvas.drawMatriz(MenuItemRendija.Checked ? penBlack : penWhite);
 				
 				canvas.fillCells();
 				textBoxRow.Text		= canvas.Row.ToString();
@@ -134,12 +138,17 @@ namespace CelularAutomaton {
 			}
 		}
 		
+		
 		void MenuItemNew(object sender, EventArgs e) {
 			saveFile.FileName = "";
 			openFile.FileName = "";
 			canvas.clean();
-			canvas.drawMatriz();
+			canvas.drawMatriz(MenuItemRendija.Checked ? penBlack : penWhite);
 		}
 		
+		
+		void MenuItemRendijaClick(object sender, EventArgs e) {
+				canvas.drawMatriz(MenuItemRendija.Checked ? penBlack : penWhite);
+		}
 	}
 }

@@ -49,6 +49,8 @@ namespace CelularAutomaton {
 			this.salirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.ayudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.opcionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.MenuItemHover = new System.Windows.Forms.ToolStripMenuItem();
+			this.MenuItemRendija = new System.Windows.Forms.ToolStripMenuItem();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
 			this.panel = new System.Windows.Forms.Panel();
 			this.label3 = new System.Windows.Forms.Label();
@@ -201,12 +203,33 @@ namespace CelularAutomaton {
 			// 
 			// opcionesToolStripMenuItem
 			// 
+			this.opcionesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+									this.MenuItemHover,
+									this.MenuItemRendija});
 			this.opcionesToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 9.5F, System.Drawing.FontStyle.Bold);
 			this.opcionesToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
 			this.opcionesToolStripMenuItem.Name = "opcionesToolStripMenuItem";
 			this.opcionesToolStripMenuItem.Size = new System.Drawing.Size(91, 41);
 			this.opcionesToolStripMenuItem.Text = "Opciones";
-			this.opcionesToolStripMenuItem.Click += new System.EventHandler(this.OpcionesToolStripMenuItemClick);
+			// 
+			// MenuItemHover
+			// 
+			this.MenuItemHover.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+			this.MenuItemHover.CheckOnClick = true;
+			this.MenuItemHover.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+			this.MenuItemHover.Name = "MenuItemHover";
+			this.MenuItemHover.Size = new System.Drawing.Size(152, 26);
+			this.MenuItemHover.Text = "Hover";
+			// 
+			// MenuItemRendija
+			// 
+			this.MenuItemRendija.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+			this.MenuItemRendija.CheckOnClick = true;
+			this.MenuItemRendija.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+			this.MenuItemRendija.Name = "MenuItemRendija";
+			this.MenuItemRendija.Size = new System.Drawing.Size(152, 26);
+			this.MenuItemRendija.Text = "Rendija";
+			this.MenuItemRendija.Click += new System.EventHandler(this.MenuItemRendijaClick);
 			// 
 			// pictureBox
 			// 
@@ -309,20 +332,20 @@ namespace CelularAutomaton {
 			this.btnGenerate.Text = "GENERAR";
 			this.btnGenerate.Click += new System.EventHandler(this.ClickGenerate);
 			// 
-			// height
+			// textBoxColumn
 			// 
 			this.textBoxColumn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.textBoxColumn.Location = new System.Drawing.Point(119, 192);
-			this.textBoxColumn.Name = "height";
+			this.textBoxColumn.Name = "textBoxColumn";
 			this.textBoxColumn.Size = new System.Drawing.Size(40, 28);
 			this.textBoxColumn.TabIndex = 11;
 			this.textBoxColumn.TextChanged += new System.EventHandler(this.HeightTextChanged);
 			// 
-			// width
+			// textBoxRow
 			// 
 			this.textBoxRow.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
 			this.textBoxRow.Location = new System.Drawing.Point(34, 192);
-			this.textBoxRow.Name = "width";
+			this.textBoxRow.Name = "textBoxRow";
 			this.textBoxRow.Size = new System.Drawing.Size(40, 28);
 			this.textBoxRow.TabIndex = 10;
 			this.textBoxRow.TextChanged += new System.EventHandler(this.WidthTextChanged);
@@ -349,6 +372,8 @@ namespace CelularAutomaton {
 			this.panel.PerformLayout();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.ToolStripMenuItem MenuItemRendija;
+		private System.Windows.Forms.ToolStripMenuItem MenuItemHover;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.RichTextBox textBox;
@@ -465,6 +490,50 @@ namespace CelularAutomaton {
 	            textBox.SelectionLength = 0;
 			}
 		}
+		
+		
+		private static bool IsBase64(string base64String) {
+		     if (string.IsNullOrEmpty(base64String) || base64String.Length % 4 != 0
+		        || base64String.Contains(" ") || base64String.Contains("\t") || base64String.Contains("\r") || base64String.Contains("\n"))
+		        return false;
+		
+		     try {
+		         Convert.FromBase64String(base64String);
+		         return true;
+		     } catch(Exception exception) {
+		     // Handle the exception
+		     }
+		     return false;
+		}
+		
+		private static bool strVoid(String str) {
+			if(str == "" || str == "0" || str == "00") {
+				return true;
+			}
+			return false;
+		}
+		
+		
+			
+		private static string save64(String dataSave) {
+			byte[] bytes = System.Text.Encoding.UTF8.GetBytes(dataSave);
+			var encodign = Convert.ToBase64String(bytes);
+			
+			return encodign;
+		}
+		
+		private static string open64(String data64) {
+			//validar que sea en base 64
+			if(!IsBase64(data64)) {
+				MessageBox.Show("Archivo no compatible o roto", "Error al abrir el archivo");
+				return "Error";
+			}
+			byte[] bytes = Convert.FromBase64String(data64);
+			String decoding = System.Text.Encoding.UTF8.GetString(bytes);
+			
+			return decoding;
+		}
+		
 		
 				
 		void resize() {

@@ -16,7 +16,6 @@ namespace CelularAutomaton {
 		//azul pastel (120, 120, 243)
 		//rojo pastel (243, 120, 120)
 		//verde pastel(120, 243, 120)
-		static private Pen pen = new Pen(Color.Black);//lapiz negro
 		static private Brush b = new SolidBrush(Color.FromArgb(0, 211, 242));//azul claro
 		static private Brush b2= new SolidBrush(Color.FromArgb(175, 211, 242));//azul sobr rojo
 		static private Brush b3= new SolidBrush(Color.FromArgb(243, 69, 69));//rojo claro
@@ -56,7 +55,7 @@ namespace CelularAutomaton {
 			matriz = new int[column, row];
 		}
 		
-		public void drawMatriz() {
+		public void drawMatriz(Pen pen) {
 			Graphics g = Graphics.FromImage(bmpBackGroundVisible);
 			int x = widthCanvas/row;
 			int y = heightCanvas/column;
@@ -85,6 +84,7 @@ namespace CelularAutomaton {
 		}
 		
 		public void drawCell(MouseEventArgs e) {
+			if(e.X < 0 || e.X >= widthCanvas || e.Y < 0 || e.Y >= heightCanvas) { return; }
 			Graphics g = Graphics.FromImage(bmpBackGroundVisible);
 			if(e.X/width < row && e.Y/height < column) {
 				if(e.Button == MouseButtons.Left) {
@@ -100,13 +100,19 @@ namespace CelularAutomaton {
 		}
 		
 		public void hoverCell(MouseEventArgs e) {
+			if(e.X < 0 || e.X >= widthCanvas || e.Y < 0 || e.Y >= heightCanvas) { return; }
 			Graphics g = Graphics.FromImage(bmpForeGround);
-			g.Clear(Color.Transparent);
 			if(bmpBackGroundVisible.GetPixel(e.X, e.Y).ToArgb().Equals(Color.FromArgb(243, 69, 69).ToArgb())) {
 				g.FillRectangle(b2,e.X/width*width+1, e.Y/height*height+1, width-1, height-1);
 			} else {
 				g.FillRectangle(b,e.X/width*width+1, e.Y/height*height+1, width-1, height-1);
 			}
+			g.Dispose();
+		}
+		
+		public void cleanHover() {
+			Graphics g = Graphics.FromImage(bmpForeGround);
+			g.Clear(Color.Transparent);
 			g.Dispose();
 		}
 		
