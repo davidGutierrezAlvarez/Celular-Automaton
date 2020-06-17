@@ -16,22 +16,21 @@ namespace CelularAutomaton {
 	public partial class MainForm : Form {
 		//validar numero entr 1 y 99 con regex
 		String number = @"[0-9]{0,2}$";
-		Pen penBlack = new Pen(Color.Black);//lapiz negro
-		Pen penWhite = new Pen(Color.White);//lapiz negro
-		List<Cell> cells;
 		
+		Brush brushAlpha;
+		Brush brushBeta;
+		int brushValue;
+		List<Cell> cells;
 		public MainForm() {
 			InitializeComponent();
-			//this.FormBorderStyle = FormBorderStyle.None;
-			//
-			// TODO: Add constructor code after the InitializeComponent() call.
-			//
-			//menubar.ResetRightToLeft();
 			init();
 			
 		}
 		
 		void init() {
+			brushAlpha = Colors.brushBlack;
+			brushBeta = Colors.brushWhite;
+			brushValue = 0;
 			saveFile.Title =	"Guardar Mapa Celular";
 			saveFile.Filter=	"Mapa Celular (*.ca)|*.ca" + "|"+
 								"Todos los archivos (*.*)|*.*";
@@ -43,12 +42,13 @@ namespace CelularAutomaton {
 			openFile.Title	= "Cargar Mapa Celular";
 			openFile.Filter	= "Mapa Celular (*.ca)|*.ca";
 			resize();
-			textBoxRow.Text = "15";
-			textBoxColumn.Text= "15";
-			canvas = new Canvas(pictureBox.Width, pictureBox.Height, 15, 15);
+			textBoxRow.Text = "10";
+			textBoxColumn.Text= "10";
+			canvas = new Canvas(pictureBox.Width, pictureBox.Height, 10, 10);
 			pictureBox.BackgroundImage = canvas.BackGroundVisible;
 			pictureBox.Image = canvas.ForeGround;
-			canvas.drawMatriz(MenuItemRendija.Checked ? penBlack : penWhite);
+			canvas.init();
+			canvas.drawMatriz(MenuItemRendija.Checked ? Colors.penBlack : Colors.penWhite);
 		}
 		
 		void ClickGenerate(object sender, EventArgs e) {
@@ -61,7 +61,7 @@ namespace CelularAutomaton {
 			//aqui recoge el alto
 			canvas.Column = Int32.Parse(textBoxColumn.Text);
 			canvas.resetMatriz();
-			canvas.drawMatriz(MenuItemRendija.Checked ? penBlack : penWhite);
+			canvas.drawMatriz(MenuItemRendija.Checked ? Colors.penBlack : Colors.penWhite);
 			pictureBox.Refresh();
 		}
 		
@@ -77,13 +77,13 @@ namespace CelularAutomaton {
 		void PictureBoxMouseMove(object sender, MouseEventArgs e) {
 			canvas.cleanHover();
 			if(MenuItemHover.Checked) {
-				canvas.hoverCell(e);
+				canvas.hoverCell(e, Colors.brushBlueLight);
 			}
 			if(animarToolStripMenuItem.Checked) {
 				return;
 			}
 			if(e.Button == MouseButtons.Left) {
-				canvas.drawCell(e);
+				canvas.drawCell(e, brushAlpha, brushValue);
 			}
 			pictureBox.Refresh();
 		}
@@ -92,7 +92,7 @@ namespace CelularAutomaton {
 			if(animarToolStripMenuItem.Checked) {
 				return;
 			}
-			canvas.drawCell(e);
+			canvas.drawCell(e, brushAlpha, brushValue);
 			pictureBox.Refresh();
 		}
 		
@@ -136,7 +136,7 @@ namespace CelularAutomaton {
 				canvas.clean();
 				//cargar y generar matriz
 				textBox.Text = canvas.setDescripcion(fileText);
-				canvas.drawMatriz(MenuItemRendija.Checked ? penBlack : penWhite);
+				canvas.drawMatriz(MenuItemRendija.Checked ? Colors.penBlack : Colors.penWhite);
 				
 				canvas.fillCells();
 				textBoxRow.Text		= canvas.Row.ToString();
@@ -150,28 +150,37 @@ namespace CelularAutomaton {
 			saveFile.FileName = "";
 			openFile.FileName = "";
 			canvas.clean();
-			canvas.drawMatriz(MenuItemRendija.Checked ? penBlack : penWhite);
+			canvas.drawMatriz(MenuItemRendija.Checked ? Colors.penBlack : Colors.penWhite);
 		}
 		
 		
 		void MenuItemRendijaClick(object sender, EventArgs e) {
-				canvas.drawMatriz(MenuItemRendija.Checked ? penBlack : penWhite);
+				canvas.drawMatriz(MenuItemRendija.Checked ? Colors.penBlack : Colors.penWhite);
 		}
 		
 		void fillCells() {
 			cells = new List<Cell>();
+			TypeGameOfLife  type; 
+			int number;
 			for(int y =0; y < canvas.Column; y++) {	
 				for(int x =0; x < canvas.Row; x++) {
-					if(canvas.matriz[y,x] == 1) {
-						cells.Add(new Cell(x, y, CellType.life));
+					//consigo el indice del enumerado a partir de la matriz
+					number = (canvas.matriz[y,x]);
+					//verifico que el valor enumerado exista
+					if(Enum.IsDefined(typeof(TypeGameOfLife), number)) {
+						//si es asi, lo agrego
+						type = (TypeGameOfLife)number;
 					} else {
-						cells.Add(new Cell(x, y, CellType.death));
+						//caso contrario agrego el primer valor
+						//normalmente es vacio o muerto
+						type = (TypeGameOfLife)0;
 					}
+					cells.Add(new Cell(x, y, type));					
 				}
 			}
 		}
 		
-		void getVecinos() {
+		void anchorNeighbors() {
 			int actual;
 			int XLeft, XRight, YTop, YBottom;
 			for(int y =0; y < canvas.Column; y++) {	
@@ -202,7 +211,7 @@ namespace CelularAutomaton {
 			if(animarToolStripMenuItem.Checked) {
 				timer.Enabled = true;
 				fillCells();
-				getVecinos();
+				anchorNeighbors();
 			} else {
 				timer.Enabled = false;
 			}
@@ -213,7 +222,8 @@ namespace CelularAutomaton {
 			
 			foreach(Cell cell in cells) {
 				if(cell.BeforeStatus != cell.Status) {
-			    	canvas.drawCell(cell.X, cell.Y, cell.Status == CellType.life ? true : false);
+					brushBeta = cell.Status == TypeGameOfLife.life ?  Colors.brushWhite: Colors.brushBlack;
+			    	canvas.drawCell(cell.X, cell.Y, brushBeta);
 			    }
 			}
 			cells.ForEach(cell => cell.upDate());
@@ -221,6 +231,56 @@ namespace CelularAutomaton {
 			pictureBox.Refresh();
 		}
 		
+		
+		
+		void MenuItemGameOfLifeClick(object sender, EventArgs e) {
+			//activar grupo actual
+			groupBoxGameOfLife.Visible = true;
+			//desactivar los demas grupos
+			groupBoxWireWorld.Visible = false;
+			//descativar los demas menus
+			MenuItemWireWorld.Checked = false;
+		}
+		
+		void MenuItemWireWorldClick(object sender, EventArgs e) {
+			
+			//activar grupo actual
+			groupBoxWireWorld.Visible = true;
+			//desactivar los demas grupos
+			groupBoxGameOfLife.Visible = false;
+			//descativar los demas menus
+			MenuItemGameOfLife.Checked = false;
+		}
 
+		
+		void RadioButtonGameOfLife_0CheckedChanged(object sender, EventArgs e) {
+			brushAlpha = Colors.brushBlack;
+			brushValue = 0;
+		}
+		
+		void RadioButtonGameOfLife_1CheckedChanged(object sender, EventArgs e) {
+			brushAlpha = Colors.brushWhite;
+			brushValue = 1;
+		}
+		
+		void RadioButtonWireWorld_0CheckedChanged(object sender, EventArgs e) {
+			brushAlpha = Colors.brushBlack;
+			brushValue = 0;
+		}
+		
+		void RadioButtonWireWorld_1CheckedChanged(object sender, EventArgs e) {
+			brushAlpha = Colors.brushGold;
+			brushValue = 1;
+		}
+		
+		void RadioButtonWireWorld_2CheckedChanged(object sender, EventArgs e) {
+			brushAlpha = Colors.brushRed;
+			brushValue = 2;
+		}
+		
+		void RadioButtonWireWorld_3CheckedChanged(object sender, EventArgs e) {
+			brushAlpha = Colors.brushBlue;
+			brushValue = 3;
+		}
 	}
 }

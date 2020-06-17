@@ -16,12 +16,11 @@ namespace CelularAutomaton {
 		//azul pastel (120, 120, 243)
 		//rojo pastel (243, 120, 120)
 		//verde pastel(120, 243, 120)
-		static private Brush b = new SolidBrush(Color.FromArgb(0, 211, 242));//azul claro
-		static private Brush b2= new SolidBrush(Color.FromArgb(175, 211, 242));//azul sobr rojo
-		static private Brush b3= new SolidBrush(Color.FromArgb(243, 69, 69));//rojo claro
-		static private Brush b4= new SolidBrush(Color.White);//blanco
-		private Bitmap bmpBackGroundVisible;
-		private Bitmap bmpBackGroundInvisible;
+		//static private Brush b = new SolidBrush(Color.FromArgb(0, 211, 242));//azul claro
+		//static private Brush b2= new SolidBrush(Color.FromArgb(175, 211, 242));//azul sobr rojo
+		//static private Brush b3= new SolidBrush(Color.FromArgb(243, 69, 69));//rojo claro
+		//static private Brush b4= new SolidBrush(Color.White);//blanco
+		private Bitmap bmpBackGround;
 		private Bitmap bmpForeGround;
 		private int widthCanvas;
 		private int heightCanvas;
@@ -38,25 +37,29 @@ namespace CelularAutomaton {
 			this.column	= column;
 			this.widthCanvas	= widthCanvas;
 			this.heightCanvas	= heightCanvas;
-			bmpBackGroundVisible	= new Bitmap(widthCanvas, heightCanvas);
-			bmpBackGroundInvisible	= new Bitmap(widthCanvas, heightCanvas);
+			bmpBackGround	= new Bitmap(widthCanvas, heightCanvas);
 			bmpForeGround			= new Bitmap(widthCanvas, heightCanvas);
 			matriz = new int[column, row];
 		}
 		
-		public Bitmap BackGroundVisible		{ get { return bmpBackGroundVisible; } }
-		public Bitmap BackGroundInvisible	{ get { return bmpBackGroundInvisible; } }
+		public Bitmap BackGroundVisible		{ get { return bmpBackGround; } }
 		public Bitmap ForeGround			{ get { return bmpForeGround; } }
 		public int Row	{ get {  return row; } set { row = value; width = widthCanvas/row; }}
 		public int Column	{ get { return column; } set { column = value; height = heightCanvas/column;  }}
 		
+		
+		public void init() {
+			Graphics g = Graphics.FromImage(bmpBackGround);
+			g.Clear(Color.Black);
+			g.Dispose();
+		}
 		
 		public void resetMatriz() {
 			matriz = new int[column, row];
 		}
 		
 		public void drawMatriz(Pen pen) {
-			Graphics g = Graphics.FromImage(bmpBackGroundVisible);
+			Graphics g = Graphics.FromImage(bmpBackGround);
 			int x = widthCanvas/row;
 			int y = heightCanvas/column;
 			for(int i = 0;i <= row; i++) {
@@ -70,51 +73,46 @@ namespace CelularAutomaton {
 		
 		public void fillCells() {
 			//rellenar las celdas con cada celula
-			Graphics g = Graphics.FromImage(bmpBackGroundVisible);
+			Graphics g = Graphics.FromImage(bmpBackGround);
 			
 			for(int y = 0; y < column; y++) {
 				for(int x = 0; x < row; x++) {
 					//dibujar matriz
 					if(matriz[y,x] == 1) {
-						g.FillRectangle(b3, x*width+1, y*height+1, width-1, height-1);
+						g.FillRectangle(Colors.brushWhite, x*width+1, y*height+1, width-1, height-1);
 					}
 				}
 			}
 			g.Dispose();
 		}
 		
-		public void drawCell(MouseEventArgs e) {
+		public void drawCell(MouseEventArgs e, Brush brushColor, int valueCell) {
 			if(e.X < 0 || e.X >= widthCanvas || e.Y < 0 || e.Y >= heightCanvas) { return; }
-			Graphics g = Graphics.FromImage(bmpBackGroundVisible);
+			Graphics g = Graphics.FromImage(bmpBackGround);
 			if(e.X/width < row && e.Y/height < column) {
-				if(e.Button == MouseButtons.Left) {
-					g.FillRectangle(b3, e.X/width*width+1, e.Y/height*height+1, width-1, height-1);
-						matriz[e.Y/height, e.X/width] = 1;
-				} else if(e.Button ==  MouseButtons.Right) {
-					g.FillRectangle(b4,e.X/width*width+1, e.Y/height*height+1, width-1, height-1);
-						matriz[e.Y/height, e.X/width] = 0;
-				}
+				g.FillRectangle(brushColor, e.X/width*width+1, e.Y/height*height+1, width-1, height-1);
+				matriz[e.Y/height, e.X/width] = valueCell;
+				
 			}
 			
 			g.Dispose();
 		}
 		
-		public void drawCell(int x, int y, bool life) {
+		public void drawCell(int x, int y, Brush brush) {
 			//if(e.X < 0 || e.X >= widthCanvas || e.Y < 0 || e.Y >= heightCanvas) { return; }
-			Graphics g = Graphics.FromImage(bmpBackGroundVisible);
+			Graphics g = Graphics.FromImage(bmpBackGround);
 			
-			g.FillRectangle(life ? b3 : b4, x*width+1, y*height+1, width-1, height-1);
+			g.FillRectangle(brush, x*width+1, y*height+1, width-1, height-1);
 			
 			g.Dispose();
 		}
-		public void hoverCell(MouseEventArgs e) {
+		
+		public void hoverCell(MouseEventArgs e, Brush brush) {
 			if(e.X < 0 || e.X >= widthCanvas || e.Y < 0 || e.Y >= heightCanvas) { return; }
 			Graphics g = Graphics.FromImage(bmpForeGround);
-			if(bmpBackGroundVisible.GetPixel(e.X, e.Y).ToArgb().Equals(Color.FromArgb(243, 69, 69).ToArgb())) {
-				g.FillRectangle(b2,e.X/width*width+1, e.Y/height*height+1, width-1, height-1);
-			} else {
-				g.FillRectangle(b,e.X/width*width+1, e.Y/height*height+1, width-1, height-1);
-			}
+			
+			g.FillRectangle(brush,e.X/width*width+1, e.Y/height*height+1, width-1, height-1);
+			
 			g.Dispose();
 		}
 		
@@ -187,7 +185,7 @@ namespace CelularAutomaton {
 		}
 		
 		public void clean() {
-			Graphics g = Graphics.FromImage(bmpBackGroundVisible);
+			Graphics g = Graphics.FromImage(bmpBackGround);
 			g.Clear(Color.Transparent);
 			g.Dispose();
 		}

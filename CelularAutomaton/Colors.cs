@@ -11,7 +11,7 @@ using System.Drawing;
 
 namespace CelularAutomaton {
 
-	public class Color {
+	public class Colors {
 		static public Pen penBlack = new Pen(Color.Black);//lapiz negro
 		static public Pen penWhite = new Pen(Color.White);//lapiz blanco
 		
@@ -22,6 +22,6 @@ namespace CelularAutomaton {
 		static public Brush brushBlueLight = new SolidBrush(Color.FromArgb(0, 211, 242));//lapiz negro
 		static public Brush brushGold = new SolidBrush(Color.Gold);//lapiz negro
 		
-		public Color() { }
+		public Colors() { }
 	}
 }

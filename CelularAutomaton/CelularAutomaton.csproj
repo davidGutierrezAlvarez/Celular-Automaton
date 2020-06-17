@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Canvas.cs" />
     <Compile Include="Cell.cs" />
+    <Compile Include="Colors.cs" />
     <Compile Include="MainForm.cs" />
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
