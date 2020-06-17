@@ -33,7 +33,7 @@ namespace CelularAutomaton {
 		/// </summary>
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
-			this.timer1 = new System.Windows.Forms.Timer(this.components);
+			this.timer = new System.Windows.Forms.Timer(this.components);
 			this.saveFile = new System.Windows.Forms.SaveFileDialog();
 			this.openFile = new System.Windows.Forms.OpenFileDialog();
 			this.panelSize = new System.Windows.Forms.Panel();
@@ -51,6 +51,7 @@ namespace CelularAutomaton {
 			this.opcionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.MenuItemHover = new System.Windows.Forms.ToolStripMenuItem();
 			this.MenuItemRendija = new System.Windows.Forms.ToolStripMenuItem();
+			this.animarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
 			this.panel = new System.Windows.Forms.Panel();
 			this.label3 = new System.Windows.Forms.Label();
@@ -68,6 +69,11 @@ namespace CelularAutomaton {
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.panel.SuspendLayout();
 			this.SuspendLayout();
+			// 
+			// timer
+			// 
+			this.timer.Interval = 150;
+			this.timer.Tick += new System.EventHandler(this.TimerTick);
 			// 
 			// panelSize
 			// 
@@ -205,7 +211,8 @@ namespace CelularAutomaton {
 			// 
 			this.opcionesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
 									this.MenuItemHover,
-									this.MenuItemRendija});
+									this.MenuItemRendija,
+									this.animarToolStripMenuItem});
 			this.opcionesToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 9.5F, System.Drawing.FontStyle.Bold);
 			this.opcionesToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
 			this.opcionesToolStripMenuItem.Name = "opcionesToolStripMenuItem";
@@ -218,7 +225,7 @@ namespace CelularAutomaton {
 			this.MenuItemHover.CheckOnClick = true;
 			this.MenuItemHover.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
 			this.MenuItemHover.Name = "MenuItemHover";
-			this.MenuItemHover.Size = new System.Drawing.Size(152, 26);
+			this.MenuItemHover.Size = new System.Drawing.Size(134, 26);
 			this.MenuItemHover.Text = "Hover";
 			// 
 			// MenuItemRendija
@@ -227,9 +234,19 @@ namespace CelularAutomaton {
 			this.MenuItemRendija.CheckOnClick = true;
 			this.MenuItemRendija.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
 			this.MenuItemRendija.Name = "MenuItemRendija";
-			this.MenuItemRendija.Size = new System.Drawing.Size(152, 26);
+			this.MenuItemRendija.Size = new System.Drawing.Size(134, 26);
 			this.MenuItemRendija.Text = "Rendija";
 			this.MenuItemRendija.Click += new System.EventHandler(this.MenuItemRendijaClick);
+			// 
+			// animarToolStripMenuItem
+			// 
+			this.animarToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+			this.animarToolStripMenuItem.CheckOnClick = true;
+			this.animarToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+			this.animarToolStripMenuItem.Name = "animarToolStripMenuItem";
+			this.animarToolStripMenuItem.Size = new System.Drawing.Size(134, 26);
+			this.animarToolStripMenuItem.Text = "Animar";
+			this.animarToolStripMenuItem.Click += new System.EventHandler(this.AnimarToolStripMenuItemClick);
 			// 
 			// pictureBox
 			// 
@@ -372,6 +389,7 @@ namespace CelularAutomaton {
 			this.panel.PerformLayout();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.ToolStripMenuItem animarToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem MenuItemRendija;
 		private System.Windows.Forms.ToolStripMenuItem MenuItemHover;
 		private System.Windows.Forms.Label label3;
@@ -401,7 +419,7 @@ namespace CelularAutomaton {
 		private System.Windows.Forms.PictureBox pictureBox;
 		private System.Windows.Forms.OpenFileDialog openFile;
 		private System.Windows.Forms.SaveFileDialog saveFile;
-		private System.Windows.Forms.Timer timer1;
+		private System.Windows.Forms.Timer timer;
 		////////////////////////////////////////////////////////////
 		int mov, movX, movY;
 		Canvas canvas;

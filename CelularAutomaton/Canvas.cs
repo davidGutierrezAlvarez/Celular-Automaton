@@ -29,7 +29,7 @@ namespace CelularAutomaton {
 		private int column;
 		private int width;
 		private int height;
-		private int[,] matriz;
+		public int[,] matriz;
 		
 		public Canvas(int widthCanvas, int heightCanvas, int row, int column) {
 			this.width = widthCanvas/row;
@@ -99,6 +99,14 @@ namespace CelularAutomaton {
 			g.Dispose();
 		}
 		
+		public void drawCell(int x, int y, bool life) {
+			//if(e.X < 0 || e.X >= widthCanvas || e.Y < 0 || e.Y >= heightCanvas) { return; }
+			Graphics g = Graphics.FromImage(bmpBackGroundVisible);
+			
+			g.FillRectangle(life ? b3 : b4, x*width+1, y*height+1, width-1, height-1);
+			
+			g.Dispose();
+		}
 		public void hoverCell(MouseEventArgs e) {
 			if(e.X < 0 || e.X >= widthCanvas || e.Y < 0 || e.Y >= heightCanvas) { return; }
 			Graphics g = Graphics.FromImage(bmpForeGround);
