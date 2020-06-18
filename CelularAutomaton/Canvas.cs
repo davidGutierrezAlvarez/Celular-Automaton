@@ -29,6 +29,7 @@ namespace CelularAutomaton {
 		private int width;
 		private int height;
 		public int[,] matriz;
+		public String type;
 		
 		public Canvas(int widthCanvas, int heightCanvas, int row, int column) {
 			this.width = widthCanvas/row;
@@ -46,13 +47,10 @@ namespace CelularAutomaton {
 		public Bitmap ForeGround			{ get { return bmpForeGround; } }
 		public int Row	{ get {  return row; } set { row = value; width = widthCanvas/row; }}
 		public int Column	{ get { return column; } set { column = value; height = heightCanvas/column;  }}
+		public int Width	{ get { return width; } }
+		public int Height	{ get { return height; } }
 		
-		
-		public void init() {
-			Graphics g = Graphics.FromImage(bmpBackGround);
-			g.Clear(Color.Black);
-			g.Dispose();
-		}
+	
 		
 		public void resetMatriz() {
 			matriz = new int[column, row];
@@ -78,8 +76,24 @@ namespace CelularAutomaton {
 			for(int y = 0; y < column; y++) {
 				for(int x = 0; x < row; x++) {
 					//dibujar matriz
-					if(matriz[y,x] == 1) {
-						g.FillRectangle(Colors.brushWhite, x*width+1, y*height+1, width-1, height-1);
+					if(type == "CelularAutomaton.GameOfLife" || type == "CelularAutomaton.Rule30") {
+						if(matriz[y,x] == 1) {
+							g.FillRectangle(Colors.brushWhite, x*width+1, y*height+1, width-1, height-1);
+						} else {
+							g.FillRectangle(Colors.brushBlack, x*width+1, y*height+1, width-1, height-1);
+						}
+					} else if(type == "CelularAutomaton.WireWorld") {
+						if(matriz[y,x] == 0) {
+							g.FillRectangle(Colors.brushBlack, x*width+1, y*height+1, width-1, height-1);
+						} else if(matriz[y,x] == 1) {
+							g.FillRectangle(Colors.brushBlue, x*width+1, y*height+1, width-1, height-1);
+						} else if(matriz[y,x] == 2) {
+							g.FillRectangle(Colors.brushRed, x*width+1, y*height+1, width-1, height-1);
+						} else if(matriz[y,x] == 3) {
+							g.FillRectangle(Colors.brushGold, x*width+1, y*height+1, width-1, height-1);
+						} else {
+							System.Windows.Forms.MessageBox.Show(string.Format("x: {0}, y: {1}", x, y));
+						}
 					}
 				}
 			}
@@ -91,10 +105,7 @@ namespace CelularAutomaton {
 			Graphics g = Graphics.FromImage(bmpBackGround);
 			if(e.X/width < row && e.Y/height < column) {
 				g.FillRectangle(brushColor, e.X/width*width+1, e.Y/height*height+1, width-1, height-1);
-				matriz[e.Y/height, e.X/width] = valueCell;
-				
 			}
-			
 			g.Dispose();
 		}
 		
@@ -122,12 +133,13 @@ namespace CelularAutomaton {
 			g.Dispose();
 		}
 		
-		public String save(String description) {
+		public String save(String description, Type t) {
 			int rowsText = 1;
 			foreach(char c in description) {
 				if(c == '\n') { rowsText++; }
 			}
 			String str = row.ToString() + "," + column.ToString() + "," + rowsText +"\n";
+			str += t.ToString() + "\n";//Tipo de celua
 			str +=  description + "\n";
 			for(int y = 0; y < column; y++) {
 				for(int x = 0; x < row; x++) {
@@ -156,17 +168,21 @@ namespace CelularAutomaton {
 					String[] values = r.Split(',');
 					Row = Int32.Parse(values[0]);
 					Column = Int32.Parse(values[1]);
-					columnsDescripcion = Int32.Parse(values[2]);
+					columnsDescripcion = Int32.Parse(values[2])+1;
 					//inicializar matriz
 					matriz = new int[column, row];
-				} else if(rowActual <= columnsDescripcion) {
+				} else if(rowActual ==  1) {
+					//obtengo el tipo de celula
+					type = r;
+					
+				}else if(rowActual <= columnsDescripcion) {
 					//obtengo la descripcion
 					descripcion += r;
 					if(rowActual < columnsDescripcion) {
 						//evita generar un salto al final del documento
 						descripcion += "\n";
 					}
-				}else {
+				} else {
 					//obtengo la matriz
 					//formato de entrada...
 					//0,1,0,1,0,1,0,0,1,0
@@ -184,9 +200,9 @@ namespace CelularAutomaton {
 			return descripcion;
 		}
 		
-		public void clean() {
+		public void Clean() {
 			Graphics g = Graphics.FromImage(bmpBackGround);
-			g.Clear(Color.Transparent);
+			g.Clear(Color.Black);
 			g.Dispose();
 		}
 		

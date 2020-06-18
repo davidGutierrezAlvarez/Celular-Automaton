@@ -9,6 +9,7 @@
  
 using System;
 using System.Drawing;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
  
@@ -45,21 +46,27 @@ namespace CelularAutomaton {
 			this.nuevoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.guardarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.guardarComoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.exportarComoToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.salirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.ayudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.opcionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.MenuItemHover = new System.Windows.Forms.ToolStripMenuItem();
 			this.MenuItemRendija = new System.Windows.Forms.ToolStripMenuItem();
-			this.animarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.MenuItemAnimate = new System.Windows.Forms.ToolStripMenuItem();
 			this.automatasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.MenuItemGameOfLife = new System.Windows.Forms.ToolStripMenuItem();
 			this.MenuItemWireWorld = new System.Windows.Forms.ToolStripMenuItem();
+			this.MenuItemRule30 = new System.Windows.Forms.ToolStripMenuItem();
+			this.ayudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
 			this.panel = new System.Windows.Forms.Panel();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.groupBoxRule30 = new System.Windows.Forms.GroupBox();
+			this.radioButtonRule30_1 = new System.Windows.Forms.RadioButton();
+			this.radioButtonRule30_0 = new System.Windows.Forms.RadioButton();
 			this.label8 = new System.Windows.Forms.Label();
 			this.label9 = new System.Windows.Forms.Label();
+			this.label16 = new System.Windows.Forms.Label();
+			this.label17 = new System.Windows.Forms.Label();
 			this.groupBoxWireWorld = new System.Windows.Forms.GroupBox();
 			this.radioButtonWireWorld_0 = new System.Windows.Forms.RadioButton();
 			this.label14 = new System.Windows.Forms.Label();
@@ -68,8 +75,8 @@ namespace CelularAutomaton {
 			this.label12 = new System.Windows.Forms.Label();
 			this.label11 = new System.Windows.Forms.Label();
 			this.radioButtonWireWorld_2 = new System.Windows.Forms.RadioButton();
-			this.radioButtonWireWorld_3 = new System.Windows.Forms.RadioButton();
 			this.radioButtonWireWorld_1 = new System.Windows.Forms.RadioButton();
+			this.radioButtonWireWorld_3 = new System.Windows.Forms.RadioButton();
 			this.label10 = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
@@ -92,7 +99,7 @@ namespace CelularAutomaton {
 			this.menu.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.panel.SuspendLayout();
-			this.groupBox1.SuspendLayout();
+			this.groupBoxRule30.SuspendLayout();
 			this.groupBoxWireWorld.SuspendLayout();
 			this.groupBoxGameOfLife.SuspendLayout();
 			this.SuspendLayout();
@@ -166,6 +173,7 @@ namespace CelularAutomaton {
 									this.nuevoToolStripMenuItem,
 									this.guardarToolStripMenuItem,
 									this.guardarComoToolStripMenuItem,
+									this.exportarComoToolStripMenuItem1,
 									this.toolStripSeparator1,
 									this.salirToolStripMenuItem});
 			this.MenuFile.Font = new System.Drawing.Font("Segoe UI Semibold", 9.5F, System.Drawing.FontStyle.Bold);
@@ -176,40 +184,48 @@ namespace CelularAutomaton {
 			// 
 			// abrirToolStripMenuItem
 			// 
-			this.abrirToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+			this.abrirToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(81)))), ((int)(((byte)(81)))), ((int)(((byte)(81)))));
 			this.abrirToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 9.6F, System.Drawing.FontStyle.Bold);
 			this.abrirToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
 			this.abrirToolStripMenuItem.Name = "abrirToolStripMenuItem";
-			this.abrirToolStripMenuItem.Size = new System.Drawing.Size(198, 28);
+			this.abrirToolStripMenuItem.Size = new System.Drawing.Size(200, 28);
 			this.abrirToolStripMenuItem.Text = "Abrir...";
 			this.abrirToolStripMenuItem.Click += new System.EventHandler(this.MenuItemOpen);
 			// 
 			// nuevoToolStripMenuItem
 			// 
-			this.nuevoToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+			this.nuevoToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(81)))), ((int)(((byte)(81)))), ((int)(((byte)(81)))));
 			this.nuevoToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
 			this.nuevoToolStripMenuItem.Name = "nuevoToolStripMenuItem";
-			this.nuevoToolStripMenuItem.Size = new System.Drawing.Size(198, 28);
+			this.nuevoToolStripMenuItem.Size = new System.Drawing.Size(200, 28);
 			this.nuevoToolStripMenuItem.Text = "Nuevo";
 			this.nuevoToolStripMenuItem.Click += new System.EventHandler(this.MenuItemNew);
 			// 
 			// guardarToolStripMenuItem
 			// 
-			this.guardarToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+			this.guardarToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(81)))), ((int)(((byte)(81)))), ((int)(((byte)(81)))));
 			this.guardarToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
 			this.guardarToolStripMenuItem.Name = "guardarToolStripMenuItem";
-			this.guardarToolStripMenuItem.Size = new System.Drawing.Size(198, 28);
+			this.guardarToolStripMenuItem.Size = new System.Drawing.Size(200, 28);
 			this.guardarToolStripMenuItem.Text = "Guardar";
 			this.guardarToolStripMenuItem.Click += new System.EventHandler(this.MenuItemSave);
 			// 
 			// guardarComoToolStripMenuItem
 			// 
-			this.guardarComoToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+			this.guardarComoToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(81)))), ((int)(((byte)(81)))), ((int)(((byte)(81)))));
 			this.guardarComoToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
 			this.guardarComoToolStripMenuItem.Name = "guardarComoToolStripMenuItem";
-			this.guardarComoToolStripMenuItem.Size = new System.Drawing.Size(198, 28);
+			this.guardarComoToolStripMenuItem.Size = new System.Drawing.Size(200, 28);
 			this.guardarComoToolStripMenuItem.Text = "Guardar Como...";
 			this.guardarComoToolStripMenuItem.Click += new System.EventHandler(this.MenuItemSaveAs);
+			// 
+			// exportarComoToolStripMenuItem1
+			// 
+			this.exportarComoToolStripMenuItem1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(81)))), ((int)(((byte)(81)))), ((int)(((byte)(81)))));
+			this.exportarComoToolStripMenuItem1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+			this.exportarComoToolStripMenuItem1.Name = "exportarComoToolStripMenuItem1";
+			this.exportarComoToolStripMenuItem1.Size = new System.Drawing.Size(200, 28);
+			this.exportarComoToolStripMenuItem1.Text = "Exportar como...";
 			// 
 			// toolStripSeparator1
 			// 
@@ -217,30 +233,23 @@ namespace CelularAutomaton {
 			this.toolStripSeparator1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
 			this.toolStripSeparator1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(195, 1);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(197, 1);
 			// 
 			// salirToolStripMenuItem
 			// 
-			this.salirToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+			this.salirToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(81)))), ((int)(((byte)(81)))), ((int)(((byte)(81)))));
 			this.salirToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
 			this.salirToolStripMenuItem.Name = "salirToolStripMenuItem";
-			this.salirToolStripMenuItem.Size = new System.Drawing.Size(198, 28);
+			this.salirToolStripMenuItem.Size = new System.Drawing.Size(200, 28);
 			this.salirToolStripMenuItem.Text = "Salir";
-			// 
-			// ayudaToolStripMenuItem
-			// 
-			this.ayudaToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 9.5F, System.Drawing.FontStyle.Bold);
-			this.ayudaToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-			this.ayudaToolStripMenuItem.Name = "ayudaToolStripMenuItem";
-			this.ayudaToolStripMenuItem.Size = new System.Drawing.Size(68, 41);
-			this.ayudaToolStripMenuItem.Text = "Ayuda";
 			// 
 			// opcionesToolStripMenuItem
 			// 
+			this.opcionesToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(81)))), ((int)(((byte)(81)))), ((int)(((byte)(81)))));
 			this.opcionesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
 									this.MenuItemHover,
 									this.MenuItemRendija,
-									this.animarToolStripMenuItem});
+									this.MenuItemAnimate});
 			this.opcionesToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 9.5F, System.Drawing.FontStyle.Bold);
 			this.opcionesToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
 			this.opcionesToolStripMenuItem.Name = "opcionesToolStripMenuItem";
@@ -249,40 +258,41 @@ namespace CelularAutomaton {
 			// 
 			// MenuItemHover
 			// 
-			this.MenuItemHover.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+			this.MenuItemHover.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(81)))), ((int)(((byte)(81)))), ((int)(((byte)(81)))));
 			this.MenuItemHover.CheckOnClick = true;
 			this.MenuItemHover.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
 			this.MenuItemHover.Name = "MenuItemHover";
-			this.MenuItemHover.Size = new System.Drawing.Size(152, 26);
+			this.MenuItemHover.Size = new System.Drawing.Size(134, 26);
 			this.MenuItemHover.Text = "Hover";
 			// 
 			// MenuItemRendija
 			// 
-			this.MenuItemRendija.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+			this.MenuItemRendija.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(81)))), ((int)(((byte)(81)))), ((int)(((byte)(81)))));
 			this.MenuItemRendija.Checked = true;
 			this.MenuItemRendija.CheckOnClick = true;
 			this.MenuItemRendija.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.MenuItemRendija.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
 			this.MenuItemRendija.Name = "MenuItemRendija";
-			this.MenuItemRendija.Size = new System.Drawing.Size(152, 26);
+			this.MenuItemRendija.Size = new System.Drawing.Size(134, 26);
 			this.MenuItemRendija.Text = "Rendija";
 			this.MenuItemRendija.Click += new System.EventHandler(this.MenuItemRendijaClick);
 			// 
-			// animarToolStripMenuItem
+			// MenuItemAnimate
 			// 
-			this.animarToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-			this.animarToolStripMenuItem.CheckOnClick = true;
-			this.animarToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-			this.animarToolStripMenuItem.Name = "animarToolStripMenuItem";
-			this.animarToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
-			this.animarToolStripMenuItem.Text = "Animar";
-			this.animarToolStripMenuItem.Click += new System.EventHandler(this.AnimarToolStripMenuItemClick);
+			this.MenuItemAnimate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(81)))), ((int)(((byte)(81)))), ((int)(((byte)(81)))));
+			this.MenuItemAnimate.CheckOnClick = true;
+			this.MenuItemAnimate.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+			this.MenuItemAnimate.Name = "MenuItemAnimate";
+			this.MenuItemAnimate.Size = new System.Drawing.Size(134, 26);
+			this.MenuItemAnimate.Text = "Animar";
+			this.MenuItemAnimate.Click += new System.EventHandler(this.AnimarToolStripMenuItemClick);
 			// 
 			// automatasToolStripMenuItem
 			// 
 			this.automatasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
 									this.MenuItemGameOfLife,
-									this.MenuItemWireWorld});
+									this.MenuItemWireWorld,
+									this.MenuItemRule30});
 			this.automatasToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 9.5F, System.Drawing.FontStyle.Bold);
 			this.automatasToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
 			this.automatasToolStripMenuItem.Name = "automatasToolStripMenuItem";
@@ -291,27 +301,46 @@ namespace CelularAutomaton {
 			// 
 			// MenuItemGameOfLife
 			// 
-			this.MenuItemGameOfLife.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+			this.MenuItemGameOfLife.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(81)))), ((int)(((byte)(81)))), ((int)(((byte)(81)))));
 			this.MenuItemGameOfLife.Checked = true;
 			this.MenuItemGameOfLife.CheckOnClick = true;
 			this.MenuItemGameOfLife.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.MenuItemGameOfLife.Font = new System.Drawing.Font("Segoe UI Semibold", 9.5F, System.Drawing.FontStyle.Bold);
 			this.MenuItemGameOfLife.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
 			this.MenuItemGameOfLife.Name = "MenuItemGameOfLife";
-			this.MenuItemGameOfLife.Size = new System.Drawing.Size(222, 26);
+			this.MenuItemGameOfLife.Size = new System.Drawing.Size(223, 26);
 			this.MenuItemGameOfLife.Text = "Juego De La Vida";
 			this.MenuItemGameOfLife.Click += new System.EventHandler(this.MenuItemGameOfLifeClick);
 			// 
 			// MenuItemWireWorld
 			// 
-			this.MenuItemWireWorld.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+			this.MenuItemWireWorld.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(81)))), ((int)(((byte)(81)))), ((int)(((byte)(81)))));
 			this.MenuItemWireWorld.CheckOnClick = true;
 			this.MenuItemWireWorld.Font = new System.Drawing.Font("Segoe UI Semibold", 9.5F, System.Drawing.FontStyle.Bold);
 			this.MenuItemWireWorld.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
 			this.MenuItemWireWorld.Name = "MenuItemWireWorld";
-			this.MenuItemWireWorld.Size = new System.Drawing.Size(222, 26);
-			this.MenuItemWireWorld.Text = "Mundo DE Alambre";
+			this.MenuItemWireWorld.Size = new System.Drawing.Size(223, 26);
+			this.MenuItemWireWorld.Text = "Mundo De Alambre";
 			this.MenuItemWireWorld.Click += new System.EventHandler(this.MenuItemWireWorldClick);
+			// 
+			// MenuItemRule30
+			// 
+			this.MenuItemRule30.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(81)))), ((int)(((byte)(81)))), ((int)(((byte)(81)))));
+			this.MenuItemRule30.CheckOnClick = true;
+			this.MenuItemRule30.Font = new System.Drawing.Font("Segoe UI Semibold", 9.5F, System.Drawing.FontStyle.Bold);
+			this.MenuItemRule30.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+			this.MenuItemRule30.Name = "MenuItemRule30";
+			this.MenuItemRule30.Size = new System.Drawing.Size(223, 26);
+			this.MenuItemRule30.Text = "Wolfram - Regla 30";
+			this.MenuItemRule30.Click += new System.EventHandler(this.MenuItemRule30Click);
+			// 
+			// ayudaToolStripMenuItem
+			// 
+			this.ayudaToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 9.5F, System.Drawing.FontStyle.Bold);
+			this.ayudaToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+			this.ayudaToolStripMenuItem.Name = "ayudaToolStripMenuItem";
+			this.ayudaToolStripMenuItem.Size = new System.Drawing.Size(68, 41);
+			this.ayudaToolStripMenuItem.Text = "Ayuda";
 			// 
 			// pictureBox
 			// 
@@ -327,7 +356,7 @@ namespace CelularAutomaton {
 			// panel
 			// 
 			this.panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-			this.panel.Controls.Add(this.groupBox1);
+			this.panel.Controls.Add(this.groupBoxRule30);
 			this.panel.Controls.Add(this.groupBoxWireWorld);
 			this.panel.Controls.Add(this.groupBoxGameOfLife);
 			this.panel.Controls.Add(this.label3);
@@ -342,38 +371,80 @@ namespace CelularAutomaton {
 			this.panel.Size = new System.Drawing.Size(970, 492);
 			this.panel.TabIndex = 10;
 			// 
-			// groupBox1
+			// groupBoxRule30
 			// 
-			this.groupBox1.Controls.Add(this.label8);
-			this.groupBox1.Controls.Add(this.label9);
-			this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.groupBox1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-			this.groupBox1.Location = new System.Drawing.Point(332, 255);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.groupBox1.Size = new System.Drawing.Size(284, 246);
-			this.groupBox1.TabIndex = 20;
-			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Otro automata";
-			this.groupBox1.Visible = false;
+			this.groupBoxRule30.Controls.Add(this.radioButtonRule30_1);
+			this.groupBoxRule30.Controls.Add(this.radioButtonRule30_0);
+			this.groupBoxRule30.Controls.Add(this.label8);
+			this.groupBoxRule30.Controls.Add(this.label9);
+			this.groupBoxRule30.Controls.Add(this.label16);
+			this.groupBoxRule30.Controls.Add(this.label17);
+			this.groupBoxRule30.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.groupBoxRule30.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+			this.groupBoxRule30.Location = new System.Drawing.Point(332, 255);
+			this.groupBoxRule30.Name = "groupBoxRule30";
+			this.groupBoxRule30.RightToLeft = System.Windows.Forms.RightToLeft.No;
+			this.groupBoxRule30.Size = new System.Drawing.Size(284, 246);
+			this.groupBoxRule30.TabIndex = 20;
+			this.groupBoxRule30.TabStop = false;
+			this.groupBoxRule30.Text = "Rule30";
+			this.groupBoxRule30.Visible = false;
+			// 
+			// radioButtonRule30_1
+			// 
+			this.radioButtonRule30_1.Checked = true;
+			this.radioButtonRule30_1.Location = new System.Drawing.Point(10, 81);
+			this.radioButtonRule30_1.Name = "radioButtonRule30_1";
+			this.radioButtonRule30_1.Size = new System.Drawing.Size(18, 24);
+			this.radioButtonRule30_1.TabIndex = 24;
+			this.radioButtonRule30_1.TabStop = true;
+			this.radioButtonRule30_1.UseVisualStyleBackColor = true;
+			this.radioButtonRule30_1.CheckedChanged += new System.EventHandler(this.RadioButtonRule30_1CheckedChanged);
+			// 
+			// radioButtonRule30_0
+			// 
+			this.radioButtonRule30_0.Location = new System.Drawing.Point(10, 33);
+			this.radioButtonRule30_0.Name = "radioButtonRule30_0";
+			this.radioButtonRule30_0.Size = new System.Drawing.Size(18, 24);
+			this.radioButtonRule30_0.TabIndex = 23;
+			this.radioButtonRule30_0.UseVisualStyleBackColor = true;
+			this.radioButtonRule30_0.CheckedChanged += new System.EventHandler(this.RadioButtonRule30_0CheckedChanged);
 			// 
 			// label8
 			// 
-			this.label8.BackColor = System.Drawing.Color.White;
-			this.label8.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.label8.Location = new System.Drawing.Point(55, 56);
+			this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label8.Location = new System.Drawing.Point(70, 83);
 			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(30, 30);
-			this.label8.TabIndex = 14;
+			this.label8.Size = new System.Drawing.Size(100, 23);
+			this.label8.TabIndex = 22;
+			this.label8.Text = "Viva";
 			// 
 			// label9
 			// 
-			this.label9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(211)))), ((int)(((byte)(242)))));
-			this.label9.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.label9.Location = new System.Drawing.Point(109, 119);
+			this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label9.Location = new System.Drawing.Point(70, 33);
 			this.label9.Name = "label9";
-			this.label9.Size = new System.Drawing.Size(30, 30);
-			this.label9.TabIndex = 14;
+			this.label9.Size = new System.Drawing.Size(100, 23);
+			this.label9.TabIndex = 21;
+			this.label9.Text = "Muerta";
+			// 
+			// label16
+			// 
+			this.label16.BackColor = System.Drawing.Color.White;
+			this.label16.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.label16.Location = new System.Drawing.Point(33, 80);
+			this.label16.Name = "label16";
+			this.label16.Size = new System.Drawing.Size(30, 30);
+			this.label16.TabIndex = 19;
+			// 
+			// label17
+			// 
+			this.label17.BackColor = System.Drawing.Color.Black;
+			this.label17.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.label17.Location = new System.Drawing.Point(33, 30);
+			this.label17.Name = "label17";
+			this.label17.Size = new System.Drawing.Size(30, 30);
+			this.label17.TabIndex = 20;
 			// 
 			// groupBoxWireWorld
 			// 
@@ -384,8 +455,8 @@ namespace CelularAutomaton {
 			this.groupBoxWireWorld.Controls.Add(this.label12);
 			this.groupBoxWireWorld.Controls.Add(this.label11);
 			this.groupBoxWireWorld.Controls.Add(this.radioButtonWireWorld_2);
-			this.groupBoxWireWorld.Controls.Add(this.radioButtonWireWorld_3);
 			this.groupBoxWireWorld.Controls.Add(this.radioButtonWireWorld_1);
+			this.groupBoxWireWorld.Controls.Add(this.radioButtonWireWorld_3);
 			this.groupBoxWireWorld.Controls.Add(this.label10);
 			this.groupBoxWireWorld.Controls.Add(this.label4);
 			this.groupBoxWireWorld.Controls.Add(this.label5);
@@ -402,12 +473,10 @@ namespace CelularAutomaton {
 			// 
 			// radioButtonWireWorld_0
 			// 
-			this.radioButtonWireWorld_0.Checked = true;
 			this.radioButtonWireWorld_0.Location = new System.Drawing.Point(10, 33);
 			this.radioButtonWireWorld_0.Name = "radioButtonWireWorld_0";
 			this.radioButtonWireWorld_0.Size = new System.Drawing.Size(18, 24);
 			this.radioButtonWireWorld_0.TabIndex = 26;
-			this.radioButtonWireWorld_0.TabStop = true;
 			this.radioButtonWireWorld_0.UseVisualStyleBackColor = true;
 			this.radioButtonWireWorld_0.CheckedChanged += new System.EventHandler(this.RadioButtonWireWorld_0CheckedChanged);
 			// 
@@ -432,7 +501,7 @@ namespace CelularAutomaton {
 			// label13
 			// 
 			this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label13.Location = new System.Drawing.Point(70, 183);
+			this.label13.Location = new System.Drawing.Point(70, 83);
 			this.label13.Name = "label13";
 			this.label13.Size = new System.Drawing.Size(100, 23);
 			this.label13.TabIndex = 23;
@@ -450,9 +519,9 @@ namespace CelularAutomaton {
 			// label11
 			// 
 			this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label11.Location = new System.Drawing.Point(70, 83);
+			this.label11.Location = new System.Drawing.Point(70, 183);
 			this.label11.Name = "label11";
-			this.label11.Size = new System.Drawing.Size(100, 23);
+			this.label11.Size = new System.Drawing.Size(111, 23);
 			this.label11.TabIndex = 21;
 			this.label11.Text = "Conductor";
 			// 
@@ -465,29 +534,31 @@ namespace CelularAutomaton {
 			this.radioButtonWireWorld_2.UseVisualStyleBackColor = true;
 			this.radioButtonWireWorld_2.CheckedChanged += new System.EventHandler(this.RadioButtonWireWorld_2CheckedChanged);
 			// 
-			// radioButtonWireWorld_3
-			// 
-			this.radioButtonWireWorld_3.Location = new System.Drawing.Point(10, 181);
-			this.radioButtonWireWorld_3.Name = "radioButtonWireWorld_3";
-			this.radioButtonWireWorld_3.Size = new System.Drawing.Size(18, 24);
-			this.radioButtonWireWorld_3.TabIndex = 19;
-			this.radioButtonWireWorld_3.UseVisualStyleBackColor = true;
-			this.radioButtonWireWorld_3.CheckedChanged += new System.EventHandler(this.RadioButtonWireWorld_3CheckedChanged);
-			// 
 			// radioButtonWireWorld_1
 			// 
 			this.radioButtonWireWorld_1.Location = new System.Drawing.Point(10, 81);
 			this.radioButtonWireWorld_1.Name = "radioButtonWireWorld_1";
 			this.radioButtonWireWorld_1.Size = new System.Drawing.Size(18, 24);
-			this.radioButtonWireWorld_1.TabIndex = 18;
+			this.radioButtonWireWorld_1.TabIndex = 19;
 			this.radioButtonWireWorld_1.UseVisualStyleBackColor = true;
 			this.radioButtonWireWorld_1.CheckedChanged += new System.EventHandler(this.RadioButtonWireWorld_1CheckedChanged);
+			// 
+			// radioButtonWireWorld_3
+			// 
+			this.radioButtonWireWorld_3.Checked = true;
+			this.radioButtonWireWorld_3.Location = new System.Drawing.Point(10, 181);
+			this.radioButtonWireWorld_3.Name = "radioButtonWireWorld_3";
+			this.radioButtonWireWorld_3.Size = new System.Drawing.Size(18, 24);
+			this.radioButtonWireWorld_3.TabIndex = 18;
+			this.radioButtonWireWorld_3.TabStop = true;
+			this.radioButtonWireWorld_3.UseVisualStyleBackColor = true;
+			this.radioButtonWireWorld_3.CheckedChanged += new System.EventHandler(this.RadioButtonWireWorld_3CheckedChanged);
 			// 
 			// label10
 			// 
 			this.label10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
 			this.label10.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.label10.Location = new System.Drawing.Point(33, 180);
+			this.label10.Location = new System.Drawing.Point(33, 80);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(30, 30);
 			this.label10.TabIndex = 15;
@@ -496,7 +567,7 @@ namespace CelularAutomaton {
 			// 
 			this.label4.BackColor = System.Drawing.Color.Gold;
 			this.label4.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.label4.Location = new System.Drawing.Point(33, 80);
+			this.label4.Location = new System.Drawing.Point(33, 180);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(30, 30);
 			this.label4.TabIndex = 14;
@@ -530,21 +601,21 @@ namespace CelularAutomaton {
 			// 
 			// radioButtonGameOfLife_1
 			// 
+			this.radioButtonGameOfLife_1.Checked = true;
 			this.radioButtonGameOfLife_1.Location = new System.Drawing.Point(10, 81);
 			this.radioButtonGameOfLife_1.Name = "radioButtonGameOfLife_1";
 			this.radioButtonGameOfLife_1.Size = new System.Drawing.Size(18, 24);
 			this.radioButtonGameOfLife_1.TabIndex = 18;
+			this.radioButtonGameOfLife_1.TabStop = true;
 			this.radioButtonGameOfLife_1.UseVisualStyleBackColor = true;
 			this.radioButtonGameOfLife_1.CheckedChanged += new System.EventHandler(this.RadioButtonGameOfLife_1CheckedChanged);
 			// 
 			// radioButtonGameOfLife_0
 			// 
-			this.radioButtonGameOfLife_0.Checked = true;
 			this.radioButtonGameOfLife_0.Location = new System.Drawing.Point(10, 33);
 			this.radioButtonGameOfLife_0.Name = "radioButtonGameOfLife_0";
 			this.radioButtonGameOfLife_0.Size = new System.Drawing.Size(18, 24);
 			this.radioButtonGameOfLife_0.TabIndex = 17;
-			this.radioButtonGameOfLife_0.TabStop = true;
 			this.radioButtonGameOfLife_0.UseVisualStyleBackColor = true;
 			this.radioButtonGameOfLife_0.CheckedChanged += new System.EventHandler(this.RadioButtonGameOfLife_0CheckedChanged);
 			// 
@@ -677,26 +748,32 @@ namespace CelularAutomaton {
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
 			this.panel.ResumeLayout(false);
 			this.panel.PerformLayout();
-			this.groupBox1.ResumeLayout(false);
+			this.groupBoxRule30.ResumeLayout(false);
 			this.groupBoxWireWorld.ResumeLayout(false);
 			this.groupBoxGameOfLife.ResumeLayout(false);
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.ToolStripMenuItem exportarComoToolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem MenuItemRule30;
+		private System.Windows.Forms.Label label17;
+		private System.Windows.Forms.Label label16;
+		private System.Windows.Forms.RadioButton radioButtonRule30_0;
+		private System.Windows.Forms.RadioButton radioButtonRule30_1;
 		private System.Windows.Forms.Label label11;
 		private System.Windows.Forms.Label label12;
 		private System.Windows.Forms.Label label13;
 		private System.Windows.Forms.Label label15;
 		private System.Windows.Forms.Label label14;
 		private System.Windows.Forms.RadioButton radioButtonWireWorld_0;
-		private System.Windows.Forms.RadioButton radioButtonWireWorld_1;
 		private System.Windows.Forms.RadioButton radioButtonWireWorld_3;
+		private System.Windows.Forms.RadioButton radioButtonWireWorld_1;
 		private System.Windows.Forms.RadioButton radioButtonWireWorld_2;
 		private System.Windows.Forms.RadioButton radioButtonGameOfLife_1;
 		private System.Windows.Forms.RadioButton radioButtonGameOfLife_0;
 		private System.Windows.Forms.Label label10;
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.Label label8;
-		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.GroupBox groupBoxRule30;
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.Label label5;
@@ -706,7 +783,7 @@ namespace CelularAutomaton {
 		private System.Windows.Forms.ToolStripMenuItem MenuItemGameOfLife;
 		private System.Windows.Forms.ToolStripMenuItem automatasToolStripMenuItem;
 		private System.Windows.Forms.GroupBox groupBoxGameOfLife;
-		private System.Windows.Forms.ToolStripMenuItem animarToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem MenuItemAnimate;
 		private System.Windows.Forms.ToolStripMenuItem MenuItemRendija;
 		private System.Windows.Forms.ToolStripMenuItem MenuItemHover;
 		private System.Windows.Forms.Label label3;
@@ -741,82 +818,19 @@ namespace CelularAutomaton {
 		int mov, movX, movY;
 		Canvas canvas;
 		
+		
 		void MenuMouseDown(object sender, MouseEventArgs e) {
 			mov = 1;
 			movX = e.X;
 			movY = e.Y;
 		}
-		
 		void MenuMouseMove(object sender, MouseEventArgs e) {
 			if(mov == 1)
 				this.SetDesktopLocation(MousePosition.X-movX, MousePosition.Y-movY);
 		}
-		
-		void MenuMouseUp(object sender, MouseEventArgs e) {
-			mov = 0;
-		}
-		
-		void LblClosedClick(object sender, EventArgs e) {
-			this.Close();
-		}
-		
-		void LblMinimizedClick(object sender, EventArgs e) {
-			this.WindowState = FormWindowState.Minimized; 
-		}
-		
-		Point ajustarZoom(Point e) {
-			int X, Y;
-			int w_i = pictureBox.Image.Width; 
-            int h_i = pictureBox.Image.Height;
-            int w_c = pictureBox.Width;
-            int h_c = pictureBox.Height;
-             float imageRatio = w_i / (float)h_i;
-            float containerRatio = w_c / (float)h_c; 
-
-            if (imageRatio >= containerRatio) {
-                float scaleFactor = w_c / (float)w_i;
-                float scaledHeight = h_i * scaleFactor;
-                float filler = Math.Abs(h_c - scaledHeight) / 2;  
-                X = (int)(e.X / scaleFactor);
-                Y = (int)((e.Y - filler) / scaleFactor);
-            } else {
-                float scaleFactor = h_c / (float)h_i;
-                float scaledWidth = w_i * scaleFactor;
-                float filler = Math.Abs(w_c - scaledWidth) / 2;
-             	X = (int)((e.X - filler) / scaleFactor);
-               	Y = (int)(e.Y / scaleFactor);
-            }
-            return new Point(X,Y);
-		}
-		
-		Point ajustarZoom(int x, int y) {
-			return ajustarZoom(new Point(x,y));
-		}
-		
-		Point ajustarZoom(MouseEventArgs e) {
-			int X, Y;
-			int w_i = pictureBox.Image.Width; 
-            int h_i = pictureBox.Image.Height;
-            int w_c = pictureBox.Width;
-            int h_c = pictureBox.Height;
-             float imageRatio = w_i / (float)h_i;
-            float containerRatio = w_c / (float)h_c; 
-
-            if (imageRatio >= containerRatio) {
-                float scaleFactor = w_c / (float)w_i;
-                float scaledHeight = h_i * scaleFactor;
-                float filler = Math.Abs(h_c - scaledHeight) / 2;  
-                X = (int)(e.X / scaleFactor);
-                Y = (int)((e.Y - filler) / scaleFactor);
-            } else {
-                float scaleFactor = h_c / (float)h_i;
-                float scaledWidth = w_i * scaleFactor;
-                float filler = Math.Abs(w_c - scaledWidth) / 2;
-             	X = (int)((e.X - filler) / scaleFactor);
-               	Y = (int)(e.Y / scaleFactor);
-            }
-            return new Point(X,Y);
-		}		
+		void MenuMouseUp(object sender, MouseEventArgs e) { mov = 0; }
+		void LblClosedClick(object sender, EventArgs e) { this.Close(); }
+		void LblMinimizedClick(object sender, EventArgs e) { this.WindowState = FormWindowState.Minimized;  }
 		
 		void isValid(TextBox textBox, String str) {
 			if(!(Regex.IsMatch(textBox.Text, str) && Regex.Replace(textBox.Text, str, String.Empty).Length == 0)) {
@@ -880,6 +894,8 @@ namespace CelularAutomaton {
 			this.Width = 638;
 			groupBoxWireWorld.Top = groupBoxGameOfLife.Top;
 			groupBoxWireWorld.Left= groupBoxGameOfLife.Left;
+			groupBoxRule30.Top = groupBoxGameOfLife.Top;
+			groupBoxRule30.Left= groupBoxGameOfLife.Left;
 		}
 		
 	}
