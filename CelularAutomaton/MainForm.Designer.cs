@@ -285,7 +285,7 @@ namespace CelularAutomaton {
 			this.MenuItemAnimate.Name = "MenuItemAnimate";
 			this.MenuItemAnimate.Size = new System.Drawing.Size(134, 26);
 			this.MenuItemAnimate.Text = "Animar";
-			this.MenuItemAnimate.Click += new System.EventHandler(this.AnimarToolStripMenuItemClick);
+			this.MenuItemAnimate.Click += new System.EventHandler(this.MenuItemAnimarClick);
 			// 
 			// automatasToolStripMenuItem
 			// 
@@ -708,7 +708,7 @@ namespace CelularAutomaton {
 			this.btnGenerate.Size = new System.Drawing.Size(123, 23);
 			this.btnGenerate.TabIndex = 12;
 			this.btnGenerate.Text = "GENERAR";
-			this.btnGenerate.Click += new System.EventHandler(this.ClickGenerate);
+			this.btnGenerate.Click += new System.EventHandler(this.MenuItemGenerateClick);
 			// 
 			// textBoxColumn
 			// 

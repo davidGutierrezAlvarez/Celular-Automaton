@@ -14,20 +14,18 @@ using System.Windows.Forms;
 
 namespace CelularAutomaton {
 	public partial class MainForm : Form {
-		//validar numero entr 1 y 99 con regex
 		String number = @"[0-9]{0,2}$";
-		
 		Brush brushAlpha;
 		Brush brushBeta;
 		int brushValue;
 		List<Cell> cells;
+		
 		public MainForm() {
 			InitializeComponent();
-			init();
-			
+			Init();
 		}
 		
-		void init() {
+		void Init() {
 			brushAlpha = Colors.brushWhite;
 			brushBeta = Colors.brushWhite;
 			brushValue = 1;
@@ -53,29 +51,6 @@ namespace CelularAutomaton {
 			//agregar una celula por cada celda...
 			fillCells();
 			anchorNeighbors();
-		}
-		
-		void ClickGenerate(object sender, EventArgs e) {
-			if(strVoid(textBoxRow.Text) || strVoid(textBoxColumn.Text)) {
-				return;
-			}
-			if(canvas.Row == Int32.Parse(textBoxRow.Text) && canvas.Column == Int32.Parse(textBoxColumn.Text)) {
-				//si los valores son iguales no modificar
-				return;
-			}
-			//aqui recorger ancho
-			canvas.Row = Int32.Parse(textBoxRow.Text);
-			//aqui recoge el alto
-			canvas.Column = Int32.Parse(textBoxColumn.Text);
-			canvas.Clean();
-			canvas.resetMatriz();
-			canvas.drawMatriz(MenuItemRendija.Checked ? Colors.penBlack : Colors.penWhite);
-			//limpiar lista de celulas
-			cells.Clear();
-			//agregar una celula por cada celda...
-			fillCells();
-			anchorNeighbors();
-			pictureBox.Refresh();
 		}
 		
 		void WidthTextChanged(object sender, EventArgs e) { isValid(textBoxRow, number); }
@@ -123,85 +98,6 @@ namespace CelularAutomaton {
 				((Rule30)cells[x + y*canvas.Row]).Status = (TypeBinary)brushValue;
 				((Rule30)cells[x + y*canvas.Row]).upDate();
 			}
-		}
-		
-		void MenuItemSave(object sender, EventArgs e) {
-			getMatriz();
-			String save = save64(canvas.save(textBox.Text, cells[0].GetType()));
-			
-			if(openFile.FileName != "") {
-				System.IO.File.WriteAllText(@openFile.FileName, save);
-				return;
-			}
-			if(saveFile.FileName != "") {
-				System.IO.File.WriteAllText(@saveFile.FileName, save);
-				return;
-			}
-			if(saveFile.ShowDialog() == DialogResult.OK) {
-				System.IO.File.WriteAllText(@saveFile.FileName, save);
-			}
-			
-		}
-		
-		void MenuItemSaveAs(object sender, EventArgs e) {
-			getMatriz();
-			saveAsFile.FileName = "";
-			if(saveAsFile.ShowDialog() == DialogResult.OK) {
-				String save = save64(canvas.save(textBox.Text, cells[0].GetType()));
-				//String save = canvas.save(textBox.Text, cells[0].GetType());
-				System.IO.File.WriteAllText(@saveAsFile.FileName, save);
-				saveFile.FileName = saveAsFile.FileName;
-			}
-		}
-		
-		void MenuItemOpen(object sender, EventArgs e) {
-			//cargar archivo, y dibujar celdas respectivas
-			openFile.FileName = "";
-			if(openFile.ShowDialog() == DialogResult.OK) {
-				String fileText = open64(File.ReadAllText(openFile.FileName));
-				if(fileText == "Error") { return; }
-				//String fileText = File.ReadAllText(openFile.FileName);
-				saveFile.FileName = openFile.FileName;
-				canvas.Clean();
-				//cargar y generar matriz
-				textBox.Text = canvas.setDescripcion(fileText);
-				canvas.drawMatriz(MenuItemRendija.Checked ? Colors.penBlack : Colors.penWhite);
-				
-				
-				if(canvas.type == "CelularAutomaton.GameOfLife") {
-					MenuItemGameOfLifeClick(sender, e);
-				} else if(canvas.type == "CelularAutomaton.WireWorld") {
-					MenuItemWireWorldClick(sender, e);
-				} else if(canvas.type == "CelularAutomaton.Rule30") {
-					MenuItemRule30Click(sender, e);
-				}
-				
-				canvas.fillCells();
-				textBoxRow.Text		= canvas.Row.ToString();
-				textBoxColumn.Text	= canvas.Column.ToString();
-				pictureBox.Refresh();
-				cells.Clear();
-				fillCells();
-				//recoger datos de la matriz y guardarlo en la lista de celulas
-				anchorNeighbors();
-				setMatriz();
-			}
-		}
-		
-		
-		void MenuItemNew(object sender, EventArgs e) {
-			saveFile.FileName = "";
-			openFile.FileName = "";
-			canvas.Clean();
-			canvas.drawMatriz(MenuItemRendija.Checked ? Colors.penBlack : Colors.penWhite);
-			cells.Clear();
-			fillCells();
-			anchorNeighbors();
-			textBox.Text = "";
-		}
-		
-		void MenuItemRendijaClick(object sender, EventArgs e) {
-				canvas.drawMatriz(MenuItemRendija.Checked ? Colors.penBlack : Colors.penWhite);
 		}
 		
 		void fillCells() {
@@ -274,14 +170,6 @@ namespace CelularAutomaton {
 			}
 		}
 		
-		void AnimarToolStripMenuItemClick(object sender, EventArgs e) {
-			if(MenuItemAnimate.Checked) {
-				timer.Enabled = true;
-			} else {
-				timer.Enabled = false;
-			}
-		}
-		
 		void TimerTick(object sender, EventArgs e) {
 			if(MenuItemGameOfLife.Checked) {
 				runGameofLife();
@@ -336,6 +224,127 @@ namespace CelularAutomaton {
 			}
 		}
 		
+		
+		
+		
+		
+		////////////////////////////////////////////////////////////////////
+		///				COMIENZAN LAS FUNCIONES DEL MENU				///
+		//////////////////////////////////////////////////////////////////
+		
+		
+		
+		
+		
+		void MenuItemSave(object sender, EventArgs e) {
+			getMatriz();
+			String save = save64(canvas.save(textBox.Text, cells[0].GetType()));
+			
+			if(openFile.FileName != "") {
+				System.IO.File.WriteAllText(@openFile.FileName, save);
+				return;
+			}
+			if(saveFile.FileName != "") {
+				System.IO.File.WriteAllText(@saveFile.FileName, save);
+				return;
+			}
+			if(saveFile.ShowDialog() == DialogResult.OK) {
+				System.IO.File.WriteAllText(@saveFile.FileName, save);
+			}
+			
+		}
+		
+		void MenuItemSaveAs(object sender, EventArgs e) {
+			getMatriz();
+			saveAsFile.FileName = "";
+			if(saveAsFile.ShowDialog() == DialogResult.OK) {
+				String save = save64(canvas.save(textBox.Text, cells[0].GetType()));
+				//String save = canvas.save(textBox.Text, cells[0].GetType());
+				System.IO.File.WriteAllText(@saveAsFile.FileName, save);
+				saveFile.FileName = saveAsFile.FileName;
+			}
+		}
+		
+		void MenuItemOpen(object sender, EventArgs e) {
+			//cargar archivo, y dibujar celdas respectivas
+			openFile.FileName = "";
+			if(openFile.ShowDialog() == DialogResult.OK) {
+				String fileText = open64(File.ReadAllText(openFile.FileName));
+				if(fileText == "Error") { return; }
+				//String fileText = File.ReadAllText(openFile.FileName);
+				saveFile.FileName = openFile.FileName;
+				canvas.Clean();
+				//cargar y generar matriz
+				textBox.Text = canvas.setDescripcion(fileText);
+				canvas.drawMatriz(MenuItemRendija.Checked ? Colors.penBlack : Colors.penWhite);
+				
+				
+				if(canvas.type == "CelularAutomaton.GameOfLife") {
+					MenuItemGameOfLifeClick(sender, e);
+				} else if(canvas.type == "CelularAutomaton.WireWorld") {
+					MenuItemWireWorldClick(sender, e);
+				} else if(canvas.type == "CelularAutomaton.Rule30") {
+					MenuItemRule30Click(sender, e);
+				}
+				
+				canvas.fillCells();
+				textBoxRow.Text		= canvas.Row.ToString();
+				textBoxColumn.Text	= canvas.Column.ToString();
+				pictureBox.Refresh();
+				cells.Clear();
+				fillCells();
+				//recoger datos de la matriz y guardarlo en la lista de celulas
+				anchorNeighbors();
+				setMatriz();
+			}
+		}
+		
+		void MenuItemNew(object sender, EventArgs e) {
+			saveFile.FileName = "";
+			openFile.FileName = "";
+			canvas.Clean();
+			canvas.drawMatriz(MenuItemRendija.Checked ? Colors.penBlack : Colors.penWhite);
+			cells.Clear();
+			fillCells();
+			anchorNeighbors();
+			textBox.Text = "";
+		}
+		
+		void MenuItemGenerateClick(object sender, EventArgs e) {
+			if(strVoid(textBoxRow.Text) || strVoid(textBoxColumn.Text)) {
+				return;
+			}
+			if(canvas.Row == Int32.Parse(textBoxRow.Text) && canvas.Column == Int32.Parse(textBoxColumn.Text)) {
+				//si los valores son iguales no modificar
+				return;
+			}
+			//aqui recorger ancho
+			canvas.Row = Int32.Parse(textBoxRow.Text);
+			//aqui recoge el alto
+			canvas.Column = Int32.Parse(textBoxColumn.Text);
+			canvas.Clean();
+			canvas.resetMatriz();
+			canvas.drawMatriz(MenuItemRendija.Checked ? Colors.penBlack : Colors.penWhite);
+			//limpiar lista de celulas
+			cells.Clear();
+			//agregar una celula por cada celda...
+			fillCells();
+			anchorNeighbors();
+			pictureBox.Refresh();
+		}
+		
+		void MenuItemRendijaClick(object sender, EventArgs e) {
+				canvas.drawMatriz(MenuItemRendija.Checked ? Colors.penBlack : Colors.penWhite);
+		}
+		
+		void MenuItemAnimarClick(object sender, EventArgs e) {
+			if(MenuItemAnimate.Checked) {
+				timer.Enabled = true;
+			} else {
+				timer.Enabled = false;
+			}
+		}
+		
 		void MenuItemGameOfLifeClick(object sender, EventArgs e) {
 			MenuItemGameOfLife.Checked = true;
 			if(MenuItemAnimate.Checked) {
@@ -354,6 +363,9 @@ namespace CelularAutomaton {
 			canvas.Clean();
 			cells.Clear();
 			fillCells();
+			
+			saveFile.FileName = "";
+			openFile.FileName = "";
 			
 			brushAlpha = Colors.brushWhite;
 			brushValue = 1;
@@ -379,6 +391,8 @@ namespace CelularAutomaton {
 			cells.Clear();
 			fillCells();
 			
+			saveFile.FileName = "";
+			openFile.FileName = "";
 			
 			brushAlpha = Colors.brushGold;
 			brushValue = 3;
@@ -405,6 +419,8 @@ namespace CelularAutomaton {
 			cells.Clear();
 			fillCells();
 			
+			saveFile.FileName = "";
+			openFile.FileName = "";
 			
 			brushAlpha = Colors.brushWhite;
 			brushValue = 1;
