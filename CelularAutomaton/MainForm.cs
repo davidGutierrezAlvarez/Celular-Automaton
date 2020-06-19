@@ -90,7 +90,7 @@ namespace CelularAutomaton {
 				canvas.hoverCell(e, Colors.brushBlueLight);
 			}
 			if(e.Button == MouseButtons.Left) {
-				canvas.drawCell(e, brushAlpha, brushValue);
+				canvas.drawCell(e, brushAlpha);
 				//canbiar estado de la celula
 				getCell(e);
 			}
@@ -101,23 +101,24 @@ namespace CelularAutomaton {
 			if(e.X < 0 || e.X > pictureBox.Width || e.Y < 0 || e.Y > pictureBox.Height) {
 				return;
 			}
-			canvas.drawCell(e, brushAlpha, brushValue);
+			canvas.drawCell(e, brushAlpha);
 			getCell(e);
 			pictureBox.Refresh();
 		}
 		
 		void getCell(MouseEventArgs e) {
-			int x = e.X / canvas.Width,
-				y = e.Y / canvas.Height;
-				if(x > canvas.Row || y > canvas.Height) {
+			if(e.X > canvas.WidthCanvas || e.Y > canvas.HeightCanvas) {
 					return;
 				}
+			int x = e.X / canvas.Width,
+				y = e.Y / canvas.Height;
+				
 			if(MenuItemGameOfLife.Checked) {
 				((GameOfLife)cells[x + y*canvas.Row]).Status = (TypeBinary)brushValue;
 				((GameOfLife)cells[x + y*canvas.Row]).upDate();
 			} else if(MenuItemWireWorld.Checked) {
 				((WireWorld)cells[x + y*canvas.Row]).Status = (TypeWireWorld)brushValue;
-				((WireWorld)cells[x + y*canvas.Row]).upDate();
+				//((WireWorld)cells[x + y*canvas.Row]).upDate();
 			} else if(MenuItemRule30.Checked) {
 				((Rule30)cells[x + y*canvas.Row]).Status = (TypeBinary)brushValue;
 				((Rule30)cells[x + y*canvas.Row]).upDate();
@@ -304,6 +305,7 @@ namespace CelularAutomaton {
 		}
 		
 		void runWireWorld() {
+			cells.ForEach(cell => ((WireWorld)cell).upDate());
 			cells.ForEach(cell => ((WireWorld)cell).NextStatus());
 			
 			foreach(Cell cell in cells) {
@@ -318,10 +320,10 @@ namespace CelularAutomaton {
 		    		canvas.drawCell(cell.X, cell.Y, brushBeta);
 				}
 			}
-			cells.ForEach(cell => ((WireWorld)cell).upDate());
 		}
 		
 		void runRule30() {
+			cells.ForEach(cell => ((Rule30)cell).upDate());
 			cells.ForEach(cell => ((Rule30)cell).NextStatus());
 			
 			foreach(Cell cell in cells) {
@@ -331,7 +333,6 @@ namespace CelularAutomaton {
 				
 			    }
 			}
-			cells.ForEach(cell => ((Rule30)cell).upDate());
 		}
 		
 		void MenuItemGameOfLifeClick(object sender, EventArgs e) {

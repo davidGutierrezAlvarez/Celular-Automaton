@@ -47,7 +47,9 @@ namespace CelularAutomaton {
 		public Bitmap ForeGround			{ get { return bmpForeGround; } }
 		public int Row	{ get {  return row; } set { row = value; width = widthCanvas/row; }}
 		public int Column	{ get { return column; } set { column = value; height = heightCanvas/column;  }}
-		public int Width	{ get { return width; } }
+		public int WidthCanvas	{ get { return widthCanvas; } }
+		public int HeightCanvas	{ get { return heightCanvas; } }
+		public int Width	{ get { return widthCanvas; } }
 		public int Height	{ get { return height; } }
 		
 	
@@ -100,7 +102,7 @@ namespace CelularAutomaton {
 			g.Dispose();
 		}
 		
-		public void drawCell(MouseEventArgs e, Brush brushColor, int valueCell) {
+		public void drawCell(MouseEventArgs e, Brush brushColor) {
 			if(e.X < 0 || e.X >= widthCanvas || e.Y < 0 || e.Y >= heightCanvas) { return; }
 			Graphics g = Graphics.FromImage(bmpBackGround);
 			if(e.X/width < row && e.Y/height < column) {
