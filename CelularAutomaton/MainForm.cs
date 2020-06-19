@@ -251,7 +251,7 @@ namespace CelularAutomaton {
 			int XLeft, XRight, YTop, YBottom;
 			for(int y =0; y < canvas.Column; y++) {	
 				for(int x =0; x < canvas.Row; x++) {
-					actual = x+y*canvas.Column;
+					actual = x+y*canvas.Row;
 					
 					XLeft	= x > 0 ? x-1 : canvas.Row-1;
 					XRight	= x < canvas.Row-1 ? x+1 : 0;
@@ -269,6 +269,7 @@ namespace CelularAutomaton {
 					cells[actual].Bottom	= cells[x		+ YBottom];
 					cells[actual].BottomLeft= cells[XLeft	+ YBottom];
 					cells[actual].BottomRight=cells[XRight	+ YBottom];
+					
 				}
 			}
 		}
